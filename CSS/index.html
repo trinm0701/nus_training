@@ -1,0 +1,1919 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Basic</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#intro" aria-label="Về đầu bài giảng">
+      <span class="brand-mark">CSS</span>
+      <span>CSS Basic</span>
+    </a>
+    <nav class="topnav" aria-label="Điều hướng bài giảng">
+      <a href="#syntax">Syntax</a>
+      <a href="#selectors">Selectors</a>
+      <a href="#how-to">How To</a>
+      <a href="#properties">Properties</a>
+      <a href="#pseudo">Pseudo</a>
+      <a href="#responsive">Responsive</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#tips">Tips</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="intro" class="hero section">
+      <div class="hero-copy">
+        <p class="eyebrow">Buổi training</p>
+        <h1>CSS: từ cú pháp đến giao diện có tương tác</h1>
+        <p class="lead">
+          CSS giúp biến HTML thô thành giao diện có bố cục, màu sắc, trạng thái
+          và chuyển động. Bài này đi từ nền tảng nhất đến những selector và
+          pseudo class thường gặp trong dự án thực tế.
+        </p>
+        <div class="hero-actions" aria-label="Lối vào nhanh">
+          <a class="primary-action" href="#syntax">Bắt đầu học</a>
+          <a class="secondary-action" href="#cheatsheet">Xem cheat sheet</a>
+        </div>
+      </div>
+      <figure class="hero-visual">
+        <img src="./assets/css-learning-map.svg" alt="Sơ đồ CSS gồm selector, cascade, properties và pseudo selectors">
+      </figure>
+    </section>
+
+    <section id="learning-path" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Lộ trình</p>
+        <h2>Học CSS theo 8 chặng của bài giảng</h2>
+      </div>
+      <div class="path-grid">
+        <article>
+          <span>1</span>
+          <h3>Syntax</h3>
+          <p>Đọc được một rule CSS: selector, property, value, declaration.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Selectors</h3>
+          <p>Hiểu class, id, element, quan hệ cha con và attribute selector để chọn đúng phần tử.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>How To</h3>
+          <p>Nhúng CSS bằng inline, internal, external và quan sát cascade bằng lab bật/tắt rule.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <h3>Properties</h3>
+          <p>Tương tác với background, border, display, flex, grid, box model, text và animation.</p>
+        </article>
+        <article>
+          <span>5</span>
+          <h3>Pseudo</h3>
+          <p>Style trạng thái và phần ảo như hover, focus, checked, before, after, nth-child.</p>
+        </article>
+        <article>
+          <span>6</span>
+          <h3>Responsive</h3>
+          <p>Nắm viewport, fluid layout, media query và cách tránh tràn layout trên mobile.</p>
+        </article>
+        <article>
+          <span>7</span>
+          <h3>Quiz</h3>
+          <p>Ôn lại kiến thức bằng 8 câu trắc nghiệm có chấm điểm và giải thích đáp án.</p>
+        </article>
+        <article>
+          <span>8</span>
+          <h3>Tips</h3>
+          <p>Ghi nhớ 15 kinh nghiệm debug CSS, tránh lỗi thường gặp và làm CSS dễ bảo trì.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="syntax" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">CSS Syntax</p>
+        <h2>Cú pháp CSS: chọn ai, đổi gì, đổi thành gì</h2>
+      </div>
+      <div class="two-column">
+        <div class="concept-panel">
+          <h3>Một CSS rule gồm 3 phần chính</h3>
+          <div class="syntax-diagram" aria-label="Sơ đồ cú pháp CSS">
+            <span class="selector-token">.button</span>
+            <span class="brace-token">{</span>
+            <span class="property-token">color</span>
+            <span class="colon-token">:</span>
+            <span class="value-token">white</span>
+            <span class="semi-token">;</span>
+            <span class="property-token">background-color</span>
+            <span class="colon-token">:</span>
+            <span class="value-token">#2563eb</span>
+            <span class="semi-token">;</span>
+            <span class="brace-token">}</span>
+          </div>
+          <ul class="plain-list">
+            <li><strong>Selector</strong>: chỉ định phần tử HTML cần style.</li>
+            <li><strong>Property</strong>: thuộc tính muốn thay đổi.</li>
+            <li><strong>Value</strong>: giá trị mới cho thuộc tính.</li>
+            <li><strong>Declaration</strong>: một cặp <code>property: value;</code>.</li>
+          </ul>
+        </div>
+        <div class="code-panel">
+          <pre><code>/* Comment trong CSS */
+selector {
+  property: value;
+}
+
+.card-title {
+  color: #0f172a;
+  font-size: 24px;
+  line-height: 1.3;
+}</code></pre>
+        </div>`
+      </div>
+    </section>
+
+    <section id="selectors" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">ID &amp; class</p>
+        <h2>Selector giúp CSS tìm đúng phần tử</h2>
+      </div>
+      <div class="comparison">
+        <article>
+          <h3>Class: dùng lại nhiều lần</h3>
+          <p>Class bắt đầu bằng dấu chấm <code>.</code>. Dùng cho nhóm phần tử có cùng vai trò hoặc cùng kiểu hiển thị.
+          </p>
+          <pre><code>&lt;button class="btn primary"&gt;Lưu&lt;/button&gt;
+
+.btn {
+  padding: 12px 16px;
+}
+
+.primary {
+  background-color: #2563eb;
+}</code></pre>
+        </article>
+        <article>
+          <h3>ID: duy nhất trên một trang</h3>
+          <p>ID bắt đầu bằng dấu thăng <code>#</code>. Dùng khi cần định danh một phần tử đặc biệt hoặc làm anchor.</p>
+          <pre><code>&lt;section id="pricing"&gt;...&lt;/section&gt;
+
+#pricing {
+  scroll-margin-top: 96px;
+}</code></pre>
+        </article>
+      </div>
+
+      <div id="cheatsheet" class="selector-board">
+        <h3>Cheat sheet selector</h3>
+        <div class="selector-grid">
+          <article><code>.class</code><span>Chọn mọi phần tử có class.</span></article>
+          <article><code>#id</code><span>Chọn phần tử có id tương ứng.</span></article>
+          <article><code>element</code><span>Chọn theo tên thẻ: <code>p</code>, <code>button</code>.</span></article>
+          <article><code>h1, p</code><span>Chọn nhiều selector cùng lúc.</span></article>
+          <article><code>.card p</code><span>Chọn hậu duệ nằm bên trong.</span></article>
+          <article><code>.card &gt; p</code><span>Chọn con trực tiếp.</span></article>
+          <article><code>[disabled]</code><span>Có attribute.</span></article>
+          <article><code>[type="email"]</code><span>Attribute có giá trị chính xác.</span></article>
+          <article><code>[class~="tag"]</code><span>Trong danh sách từ có từ đó.</span></article>
+          <article><code>[href^="https"]</code><span>Bắt đầu bằng giá trị.</span></article>
+          <article><code>[href*="docs"]</code><span>Có chứa chuỗi.</span></article>
+        </div>
+      </div>
+
+      <div class="selector-demo">
+        <div class="mini-dom">
+          <div class="node html-node">body</div>
+          <div class="node parent-node">.card</div>
+          <div class="node child-node">h3</div>
+          <div class="node child-node selected-node">p.highlight</div>
+          <div class="node nested-node">a[href^="https"]</div>
+        </div>
+        <div class="demo-note">
+          <h3>Hình dung selector như đường dẫn</h3>
+          <p>
+            <code>.card p</code> đi vào mọi cấp bên trong <code>.card</code>,
+            còn <code>.card &gt; p</code> chỉ bắt đúng con trực tiếp.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-to" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">CSS How To</p>
+        <h2>3 cách thêm CSS vào HTML</h2>
+      </div>
+      <div class="method-grid">
+        <article>
+          <span class="method-badge">Inline</span>
+          <h3>Viết trực tiếp trong thẻ</h3>
+          <pre><code>&lt;p style="color: red;"&gt;
+  Cảnh báo
+&lt;/p&gt;</code></pre>
+          <p>Nhanh để thử, nhưng khó bảo trì và khó tái sử dụng.</p>
+        </article>
+        <article>
+          <span class="method-badge">Internal</span>
+          <h3>Viết trong thẻ style</h3>
+          <pre><code>&lt;style&gt;
+  p { color: red; }
+&lt;/style&gt;</code></pre>
+          <p>Hợp với demo nhỏ hoặc một trang đơn giản.</p>
+        </article>
+        <article>
+          <span class="method-badge">External</span>
+          <h3>Tách ra file .css</h3>
+          <pre><code>&lt;link rel="stylesheet"
+      href="./styles.css"&gt;</code></pre>
+          <p>Cách nên dùng trong dự án vì dễ chia file, cache và quản lý.</p>
+        </article>
+      </div>
+
+      <div class="cascade-lab" data-demo="cascadePriority">
+        <div class="cascade-story">
+          <h3>Style priority: Cascading Order</h3>
+          <p>
+            Hãy tưởng tượng nhiều rule đang cùng “tranh quyền” đổi màu một button.
+            CSS không đoán ý mình; nó so từng rule theo thứ tự ưu tiên và chọn rule thắng.
+          </p>
+          <div class="control-grid cascade-controls">
+            <label class="check-control"><input type="checkbox" data-control="cascadeTag" checked> bật tag selector</label>
+            <label class="check-control"><input type="checkbox" data-control="cascadeClass" checked> bật class selector</label>
+            <label class="check-control"><input type="checkbox" data-control="cascadeClassLate" checked> bật class viết sau</label>
+            <label class="check-control"><input type="checkbox" data-control="cascadeId" checked> bật id selector</label>
+            <label class="check-control"><input type="checkbox" data-control="cascadeInline" checked> bật inline style</label>
+            <label class="check-control"><input type="checkbox" data-control="cascadeImportant" checked> bật !important</label>
+          </div>
+          <div class="cascade-target">
+            <button type="button" data-target="cascadeButton">Button mẫu</button>
+            <p><strong>Kết quả cuối:</strong> <span data-output="cascadeWinner">màu hồng thắng vì rule có !important.</span></p>
+          </div>
+        </div>
+
+        <div class="cascade-rules" aria-label="Các rule cùng style một button">
+          <article class="rule-card is-lost" data-rule="tag">
+            <span>1</span>
+            <h4>Selector chung</h4>
+            <code>button { background: gray; }</code>
+            <p>Thua vì chỉ chọn theo tag, độ cụ thể thấp.</p>
+          </article>
+          <article class="rule-card is-lost" data-rule="class">
+            <span>2</span>
+            <h4>Class selector</h4>
+            <code>.primary { background: blue; }</code>
+            <p>Mạnh hơn tag, nhưng nếu có rule cùng class viết sau thì rule sau thắng.</p>
+          </article>
+          <article class="rule-card is-lost" data-rule="classLate">
+            <span>3</span>
+            <h4>Cùng class, viết sau</h4>
+            <code>.primary { background: teal; }</code>
+            <p>Cùng độ cụ thể với rule class ở trên, nhưng thắng vì nằm sau trong source order.</p>
+          </article>
+          <article class="rule-card is-lost" data-rule="id">
+            <span>4</span>
+            <h4>ID selector</h4>
+            <code>#saveBtn { background: orange; }</code>
+            <p>Rất cụ thể, nhưng vẫn thua inline style.</p>
+          </article>
+          <article class="rule-card is-lost" data-rule="inline">
+            <span>5</span>
+            <h4>Inline style</h4>
+            <code>style="background: green"</code>
+            <p>Gần như thắng, trừ khi gặp <code>!important</code>.</p>
+          </article>
+          <article class="rule-card is-winner" data-rule="important">
+            <span>6</span>
+            <h4>Importance</h4>
+            <code>.primary { background: rose !important; }</code>
+            <p>Thắng vì <code>!important</code> được xét trước specificity.</p>
+          </article>
+        </div>
+
+        <div class="cascade-checklist">
+          <h4>Cách debug khi CSS không ăn</h4>
+          <ol>
+            <li>Có rule nào dùng <code>!important</code> không?</li>
+            <li>Style đến từ browser, thư viện, file mình viết hay inline?</li>
+            <li>Selector nào cụ thể hơn: tag, class, id hay inline?</li>
+            <li>Nếu cùng độ mạnh, rule nào được viết sau?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="properties" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">CSS Properties</p>
+        <h2>Các nhóm thuộc tính quan trọng</h2>
+        <p>
+          Mỗi property thường trả lời một câu hỏi: phần tử trông như thế nào,
+          chiếm bao nhiêu chỗ, nằm ở đâu, phản ứng ra sao khi người dùng tương tác.
+        </p>
+      </div>
+
+      <div class="property-gallery">
+        <article class="property-card background-card">
+          <h3>background</h3>
+          <p><code>background-color</code>, <code>background-image</code>, <code>background-size</code>,
+            <code>background-position</code>, <code>background-repeat</code>.
+          </p>
+        </article>
+        <article class="property-card border-card">
+          <h3>border</h3>
+          <p><code>border</code>, <code>border-top</code>, <code>border-bottom</code>, <code>border-color</code>,
+            <code>border-radius</code>.
+          </p>
+        </article>
+        <article class="property-card color-card">
+          <h3>color &amp; cursor</h3>
+          <p><code>color</code> đổi màu chữ. <code>cursor</code> đổi con trỏ khi hover.</p>
+          <button class="cursor-demo" type="button">Hover để thấy cursor</button>
+        </article>
+        <article class="property-card display-card">
+          <h3>display &amp; flex</h3>
+          <div class="flex-demo" aria-label="Demo flex">
+            <span>1</span><span>2</span><span>3</span>
+          </div>
+          <p><code>display: flex</code> giúp căn hàng/cột, khoảng cách, căn giữa.</p>
+        </article>
+        <article class="property-card font-card">
+          <h3>@font-face &amp; font</h3>
+          <p><code>font-family</code>, <code>font-size</code>, <code>font-weight</code>, <code>font-style</code>.</p>
+          <pre><code>@font-face {
+  font-family: "BrandFont";
+  src: url("./BrandFont.woff2");
+}</code></pre>
+        </article>
+        <article class="property-card size-card">
+          <h3>width, height, position</h3>
+          <p><code>width</code>, <code>height</code>, <code>left</code>, <code>right</code>, <code>top</code>,
+            <code>bottom</code> thường đi cùng <code>position</code>.
+          </p>
+          <div class="position-demo"><span>absolute</span></div>
+        </article>
+        <article class="property-card spacing-card">
+          <h3>margin &amp; padding</h3>
+          <div class="box-model-demo">
+            <span>content</span>
+          </div>
+          <p><code>padding</code> là khoảng cách bên trong; <code>margin</code> là khoảng cách bên ngoài.</p>
+        </article>
+        <article class="property-card overflow-card">
+          <h3>opacity, overflow</h3>
+          <p class="overflow-box">
+            Nội dung dài hơn khung sẽ bị xử lý bằng overflow: auto, hidden hoặc visible.
+          </p>
+          <p><code>opacity</code> điều chỉnh độ trong suốt.</p>
+        </article>
+        <article class="property-card list-card">
+          <h3>line-height, list-style, float</h3>
+          <ul>
+            <li>line-height giúp đoạn văn dễ đọc.</li>
+            <li>list-style đổi bullet/number.</li>
+            <li>float thường dùng trong layout cũ hoặc để text ôm ảnh.</li>
+          </ul>
+        </article>
+        <article class="property-card animation-card">
+          <h3>animation</h3>
+          <div class="pulse-dot" aria-hidden="true"></div>
+          <pre><code>@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.25); }
+}</code></pre>
+        </article>
+      </div>
+
+      <div class="property-lab">
+        <div class="lab-heading">
+          <p class="eyebrow">Properties lab</p>
+          <h3>Tự chọn property rồi xem giao diện đổi ngay</h3>
+          <p>
+            Tick checkbox, chọn option hoặc kéo slider để quyết định property
+            nào được apply. Khi bấm <code>Show code</code>, đoạn CSS trong card
+            sẽ cập nhật theo đúng lựa chọn hiện tại.
+          </p>
+        </div>
+
+        <div class="interactive-grid">
+          <article class="demo-panel bg-action" data-demo="background">
+            <h3>background + border</h3>
+            <div class="action-surface bg-surface" data-target="background">
+              <span>Preview</span>
+            </div>
+            <div class="control-grid">
+              <label class="check-control"><input type="checkbox" data-control="bgImage" checked>
+                background-image</label>
+              <label class="check-control"><input type="checkbox" data-control="borderOn" checked> border</label>
+              <label class="field-control">background-color
+                <select data-control="bgColor">
+                  <option value="#2563eb">blue</option>
+                  <option value="#0f9f8f">teal</option>
+                  <option value="#e11d48">rose</option>
+                  <option value="#f59e0b">amber</option>
+                </select>
+              </label>
+              <label class="field-control">background-size
+                <select data-control="bgSize">
+                  <option value="24px 24px">24px tile</option>
+                  <option value="48px 48px" selected>48px tile</option>
+                  <option value="96px 96px">96px tile</option>
+                  <option value="160px 160px">160px tile</option>
+                </select>
+              </label>
+              <label class="range-control">border-width
+                <input type="range" min="0" max="12" value="4" data-control="borderWidth">
+                <output data-output="borderWidth">4px</output>
+              </label>
+              <label class="field-control">border-color
+                <input type="color" value="#f59e0b" data-control="borderColor">
+              </label>
+            </div>
+            <p>
+              Dùng để thấy <code>background-color</code>, <code>background-image</code>,
+              <code>background-size</code>, <code>border</code> và <code>border-color</code>.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-bg"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-bg" hidden><code data-live-code="background"></code></pre>
+          </article>
+          <article class="demo-panel display-action-card" data-demo="display">
+            <h3>display</h3>
+            <div class="display-action" data-target="display">
+              <p class="display-line">
+                <em>Before</em>
+                <strong class="display-chip">Main</strong>
+                <small class="display-chip">Side</small>
+                <span class="display-chip">Extra</span>
+                <em>After</em>
+              </p>
+            </div>
+            <div class="control-grid">
+              <label class="field-control">display
+                <select data-control="display">
+                  <option value="inline">inline</option>
+                  <option value="block">block</option>
+                  <option value="inline-block" selected>inline-block</option>
+                  <option value="none">none</option>
+                </select>
+              </label>
+              <label class="check-control"><input type="checkbox" data-control="centerItems" checked> center
+                text/content</label>
+              <label class="range-control">item width
+                <input type="range" min="48" max="140" value="82" data-control="displayWidth">
+                <output data-output="displayWidth">82px</output>
+              </label>
+              <label class="range-control">item height
+                <input type="range" min="28" max="84" value="42" data-control="displayHeight">
+                <output data-output="displayHeight">42px</output>
+              </label>
+              <label class="range-control">item margin
+                <input type="range" min="0" max="18" value="6" data-control="displayGap">
+                <output data-output="displayGap">6px</output>
+              </label>
+            </div>
+            <p>
+              <code>inline</code> nằm cùng dòng nhưng bỏ qua width/height.
+              <code>block</code> xuống dòng. <code>inline-block</code> nằm cùng dòng
+              và vẫn nhận width/height.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-display"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-display" hidden><code data-live-code="display"></code></pre>
+          </article>
+
+          <article class="demo-panel flex-action-card" data-demo="flex">
+            <h3>display: flex</h3>
+            <div class="flex-action" data-target="flex">
+              <b>A</b>
+              <b>B</b>
+              <b>C</b>
+            </div>
+            <div class="control-grid">
+              <label class="check-control"><input type="checkbox" data-control="displayFlex" checked> display:
+                flex</label>
+              <label class="field-control">flex-direction
+                <select data-control="flexDirection">
+                  <option value="row">row</option>
+                  <option value="column">column</option>
+                </select>
+              </label>
+              <label class="field-control">align-items
+                <select data-control="alignItems">
+                  <option value="flex-start">flex-start</option>
+                  <option value="center" selected>center</option>
+                  <option value="flex-end">flex-end</option>
+                  <option value="stretch">stretch</option>
+                </select>
+              </label>
+              <label class="field-control">justify-content
+                <select data-control="justifyContent">
+                  <option value="flex-start">flex-start</option>
+                  <option value="center" selected>center</option>
+                  <option value="space-between">space-between</option>
+                  <option value="space-around">space-around</option>
+                  <option value="flex-end">flex-end</option>
+                </select>
+              </label>
+              <label class="range-control">gap
+                <input type="range" min="0" max="32" value="12" data-control="gap">
+                <output data-output="gap">12px</output>
+              </label>
+            </div>
+            <p>
+              Nếu bỏ tick <code>display: flex</code>, các property như
+              <code>align-items</code>, <code>justify-content</code>, <code>gap</code>
+              không còn tạo bố cục flex.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-flex"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-flex" hidden><code data-live-code="flex"></code></pre>
+          </article>
+
+          <article class="demo-panel grid-flex-card" data-demo="layoutCompare">
+            <h3>grid vs flex</h3>
+            <div class="layout-compare" data-target="layoutCompare">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+              <span>6</span>
+              <span>7</span>
+              <span>8</span>
+              <span>9</span>
+            </div>
+            <div class="control-grid">
+              <label class="field-control">layout mode
+                <select data-control="layoutMode">
+                  <option value="flex">flex</option>
+                  <option value="grid" selected>grid</option>
+                </select>
+              </label>
+              <label class="range-control">items
+                <input type="range" min="4" max="9" value="8" data-control="layoutItems">
+                <output data-output="layoutItems">8</output>
+              </label>
+              <label class="range-control">grid columns
+                <input type="range" min="2" max="4" value="3" data-control="gridColumns">
+                <output data-output="gridColumns">3</output>
+              </label>
+              <label class="range-control">flex item width
+                <input type="range" min="54" max="118" value="78" data-control="flexItemWidth">
+                <output data-output="flexItemWidth">78px</output>
+              </label>
+              <label class="range-control">gap
+                <input type="range" min="4" max="26" value="10" data-control="layoutGap">
+                <output data-output="layoutGap">10px</output>
+              </label>
+            </div>
+            <p>
+              <code>flex</code> giỏi xếp theo một trục và tự wrap theo width item.
+              <code>grid</code> giữ hàng/cột rõ ràng bằng <code>grid-template-columns</code>.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-layout-compare"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-layout-compare" hidden><code data-live-code="layoutCompare"></code></pre>
+          </article>
+
+          <article class="demo-panel position-action-card" data-demo="position">
+            <h3>position + top/right/bottom/left</h3>
+            <div class="position-stage" data-target="positionStage">
+              <strong>relative parent</strong>
+              <em data-target="positionBadge">badge</em>
+            </div>
+            <div class="control-grid">
+              <label class="check-control"><input type="checkbox" data-control="absoluteOn" checked> position:
+                absolute</label>
+              <label class="field-control">horizontal
+                <select data-control="horizontal">
+                  <option value="left">left</option>
+                  <option value="right" selected>right</option>
+                </select>
+              </label>
+              <label class="field-control">vertical
+                <select data-control="vertical">
+                  <option value="top" selected>top</option>
+                  <option value="bottom">bottom</option>
+                </select>
+              </label>
+              <label class="range-control">x offset
+                <input type="range" min="0" max="90" value="18" data-control="xOffset">
+                <output data-output="xOffset">18px</output>
+              </label>
+              <label class="range-control">y offset
+                <input type="range" min="0" max="90" value="18" data-control="yOffset">
+                <output data-output="yOffset">18px</output>
+              </label>
+            </div>
+            <p>
+              Parent dùng <code>position: relative</code>. Badge chỉ neo bằng
+              <code>top/right/bottom/left</code> khi được bật <code>absolute</code>.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-position"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-position" hidden><code data-live-code="position"></code></pre>
+          </article>
+
+          <article class="demo-panel spacing-action-card" data-demo="spacing">
+            <h3>margin + padding + width/height</h3>
+            <div class="spacing-action" data-target="spacingStage">
+              <div data-target="spacingBox"><span data-target="spacingContent">content</span></div>
+            </div>
+            <div class="box-metrics" aria-label="Box sizing metrics">
+              <span>declared width <strong data-metric="declaredWidth">0px</strong></span>
+              <span>padding x2 <strong data-metric="paddingTotal">0px</strong></span>
+              <span>border x2 <strong data-metric="borderTotal">0px</strong></span>
+              <span>visual width <strong data-metric="visualWidth">0px</strong></span>
+              <span>content area <strong data-metric="contentArea">0px</strong></span>
+            </div>
+            <p class="box-formula" data-metric="formula">box-sizing formula</p>
+            <div class="control-grid">
+              <label class="range-control">wrapper width
+                <input type="range" min="140" max="320" value="220" data-control="boxWidth">
+                <output data-output="boxWidth">220px</output>
+              </label>
+              <label class="range-control">wrapper height
+                <input type="range" min="54" max="130" value="74" data-control="boxHeight">
+                <output data-output="boxHeight">74px</output>
+              </label>
+              <label class="range-control">wrapper padding
+                <input type="range" min="0" max="28" value="8" data-control="boxPadding">
+                <output data-output="boxPadding">8px</output>
+              </label>
+              <label class="range-control">wrapper border
+                <input type="range" min="0" max="14" value="6" data-control="boxBorder">
+                <output data-output="boxBorder">6px</output>
+              </label>
+              <label class="field-control">box-sizing
+                <select data-control="boxSizing">
+                  <option value="border-box" selected>border-box</option>
+                  <option value="content-box">content-box</option>
+                </select>
+              </label>
+              <label class="range-control">content width
+                <input type="range" min="40" max="180" value="96" data-control="contentWidth">
+                <output data-output="contentWidth">96px</output>
+              </label>
+              <label class="range-control">content height
+                <input type="range" min="28" max="110" value="46" data-control="contentHeight">
+                <output data-output="contentHeight">46px</output>
+              </label>
+              <label class="range-control">margin-top
+                <input type="range" min="0" max="28" value="0" data-control="boxMargin">
+                <output data-output="boxMargin">0px</output>
+              </label>
+            </div>
+            <p>
+              Wrapper màu cam có <code>width</code>, <code>height</code>,
+              <code>padding</code>; content màu trắng có kích thước riêng để
+              so sánh padding và <code>box-sizing</code> ảnh hưởng tới kích
+              thước khung bao quanh con ra sao.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-spacing"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-spacing" hidden><code data-live-code="spacing"></code></pre>
+          </article>
+
+          <article class="demo-panel overflow-action-card" data-demo="overflow">
+            <h3>overflow + opacity</h3>
+            <p class="overflow-action" data-target="overflow">
+              Khi nội dung dài hơn chiều cao khung, overflow quyết định phần
+              dư sẽ hiện ra, bị cắt đi hay có thanh cuộn. Opacity làm toàn bộ
+              phần tử trong suốt hơn, bao gồm cả chữ và nền. Hãy thử đổi
+              overflow giữa hidden, auto, scroll và visible.
+            </p>
+            <div class="control-grid">
+              <label class="field-control">overflow
+                <select data-control="overflow">
+                  <option value="hidden">hidden</option>
+                  <option value="auto">auto</option>
+                  <option value="scroll">scroll</option>
+                  <option value="visible">visible</option>
+                </select>
+              </label>
+              <label class="range-control">max-height
+                <input type="range" min="60" max="180" value="88" data-control="maxHeight">
+                <output data-output="maxHeight">88px</output>
+              </label>
+              <label class="range-control">opacity
+                <input type="range" min="20" max="100" value="62" data-control="opacity">
+                <output data-output="opacity">0.62</output>
+              </label>
+            </div>
+            <p>
+              Dùng khi nội dung vượt khung hoặc cần làm phần tử mờ đi.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-overflow"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-overflow" hidden><code data-live-code="overflow"></code></pre>
+          </article>
+
+          <article class="demo-panel text-action-card" data-demo="text">
+            <h3>font + line-height + list-style + float</h3>
+            <div class="text-action" data-target="text">
+              <span class="float-chip" data-target="floatChip">float</span>
+              <p>Đổi font-size, font-weight, line-height và float để thấy đoạn văn thay đổi nhịp đọc.</p>
+              <ul>
+                <li>font-size</li>
+                <li>font-weight</li>
+                <li>list-style</li>
+              </ul>
+            </div>
+            <div class="control-grid">
+              <label class="range-control">font-size
+                <input type="range" min="14" max="22" value="15" data-control="fontSize">
+                <output data-output="fontSize">15px</output>
+              </label>
+              <label class="field-control">font-weight
+                <select data-control="fontWeight">
+                  <option value="400">400</option>
+                  <option value="600">600</option>
+                  <option value="800">800</option>
+                </select>
+              </label>
+              <label class="range-control">line-height
+                <input type="range" min="12" max="20" value="14" data-control="lineHeight">
+                <output data-output="lineHeight">1.4</output>
+              </label>
+              <label class="field-control">list-style
+                <select data-control="listStyle">
+                  <option value="disc">disc</option>
+                  <option value="square">square</option>
+                  <option value="decimal">decimal</option>
+                  <option value="none">none</option>
+                </select>
+              </label>
+              <label class="field-control">float
+                <select data-control="float">
+                  <option value="left">left</option>
+                  <option value="right">right</option>
+                  <option value="none">none</option>
+                </select>
+              </label>
+            </div>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-text"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-text" hidden><code data-live-code="text"></code></pre>
+          </article>
+
+          <article class="demo-panel animation-action-card" data-demo="animation">
+            <h3>animation</h3>
+            <div class="motion-demo" data-target="animation">
+              <div class="motion-track" aria-hidden="true">
+                <span class="track-label start">from</span>
+                <i></i>
+                <span class="track-label end">to</span>
+              </div>
+              <div class="motion-status" data-target="animationStatus">animation running</div>
+            </div>
+            <div class="control-grid">
+              <label class="check-control"><input type="checkbox" data-control="animationOn" checked> animation</label>
+              <label class="range-control">duration
+                <input type="range" min="50" max="300" value="125" data-control="duration">
+                <output data-output="duration">1.25s</output>
+              </label>
+              <label class="range-control">delay
+                <input type="range" min="0" max="150" value="0" data-control="delay">
+                <output data-output="delay">0s</output>
+              </label>
+              <label class="field-control">timing-function
+                <select data-control="timing">
+                  <option value="linear">linear</option>
+                  <option value="ease-in-out">ease-in-out</option>
+                  <option value="ease-in">ease-in</option>
+                  <option value="ease-out">ease-out</option>
+                  <option value="steps(6)">steps(6)</option>
+                </select>
+              </label>
+              <label class="field-control">direction
+                <select data-control="direction">
+                  <option value="normal">normal</option>
+                  <option value="reverse">reverse</option>
+                  <option value="alternate">alternate</option>
+                </select>
+              </label>
+              <label class="field-control">iteration-count
+                <select data-control="iteration">
+                  <option value="infinite">infinite</option>
+                  <option value="1">1</option>
+                  <option value="3">3</option>
+                </select>
+              </label>
+            </div>
+            <p>
+              Bật animation để viên bi đi từ <code>from</code> sang <code>to</code>.
+              Đổi duration, delay, easing, direction và số lần chạy để thấy từng phần của shorthand.
+            </p>
+            <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-animation"
+              data-code-toggle>Show code</button>
+            <pre class="demo-code" id="code-animation" hidden><code data-live-code="animation"></code></pre>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="pseudo" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Pseudo class / element</p>
+        <h2>Style theo trạng thái và phần ảo</h2>
+        <p>
+          Pseudo class chọn phần tử theo trạng thái hoặc vị trí. Pseudo element
+          tạo một phần ảo để style mà không cần thêm HTML thật.
+        </p>
+      </div>
+
+      <div class="pseudo-lab">
+        <article class="pseudo-card" data-demo="statePseudo">
+          <h3>Trạng thái tương tác</h3>
+          <div class="pseudo-state-demo state-cases">
+            <div class="state-case">
+              <a class="pseudo-link-demo" href="#pseudo">Rê chuột vào link</a>
+              <span class="state-token" data-state-readout="hover">
+                <b>:hover</b><small>Bật khi con trỏ nằm trên link</small>
+              </span>
+            </div>
+            <div class="state-case">
+              <button class="pseudo-button-demo" type="button" data-target="activePseudo">Nhấn giữ button</button>
+              <span class="state-token" data-state-readout="active">
+                <b>:active</b><small>Chỉ bật trong lúc button đang bị nhấn giữ</small>
+              </span>
+            </div>
+            <div class="state-case">
+              <input class="pseudo-input-demo" type="text" data-target="focusPseudo" placeholder="Click hoặc Tab vào input">
+              <span class="state-token" data-state-readout="focus">
+                <b>:focus</b><small>Bật khi input đang nhận bàn phím</small>
+              </span>
+            </div>
+          </div>
+          <p>
+            <code>:hover</code> xảy ra khi con trỏ nằm trên phần tử.
+            <code>:active</code> chỉ tồn tại trong lúc đang nhấn giữ.
+            <code>:focus</code> xảy ra khi phần tử đang nhận thao tác bàn phím.
+          </p>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-pseudo-state"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-pseudo-state" hidden><code data-live-code="statePseudo"></code></pre>
+        </article>
+
+        <article class="pseudo-card" data-demo="formPseudo">
+          <h3>Form state</h3>
+          <div class="pseudo-form-demo">
+            <label class="pseudo-check-demo">
+              <input type="checkbox" data-control="checkedState" checked>
+              <span>:checked</span>
+            </label>
+            <button class="pseudo-disabled-demo" type="button" data-target="disabledPseudo" disabled>:disabled</button>
+            <div class="pseudo-empty-demo" data-target="emptyPseudo" aria-label="Demo empty box"></div>
+          </div>
+          <div class="control-grid">
+            <label class="check-control"><input type="checkbox" data-control="disableState" checked> bật disabled</label>
+            <label class="check-control"><input type="checkbox" data-control="emptyState" checked> giữ ô trống</label>
+          </div>
+          <p>
+            Checkbox đổi màu bằng <code>:checked</code>, button xám bằng
+            <code>:disabled</code>, ô trống được highlight bằng <code>:empty</code>.
+          </p>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-pseudo-form"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-pseudo-form" hidden><code data-live-code="formPseudo"></code></pre>
+        </article>
+
+        <article class="pseudo-card" data-demo="generatedPseudo">
+          <h3>::before / ::after</h3>
+          <div class="generated-demo">
+            <span class="generated-badge" data-target="generatedBadge" data-before="★" data-after="NEW">CSS</span>
+            <p class="generated-quote">Pseudo element thêm phần trang trí mà không cần thêm tag HTML.</p>
+          </div>
+          <div class="control-grid">
+            <label class="check-control"><input type="checkbox" data-control="beforeOn" checked> bật ::before</label>
+            <label class="check-control"><input type="checkbox" data-control="afterOn" checked> bật ::after</label>
+            <label class="field-control">after text
+              <input type="text" value="NEW" maxlength="8" data-control="afterText">
+            </label>
+            <label class="field-control">tone
+              <select data-control="badgeTone">
+                <option value="#14213d" selected>ink</option>
+                <option value="#2563eb">blue</option>
+                <option value="#e11d48">rose</option>
+                <option value="#0f9f8f">teal</option>
+              </select>
+            </label>
+          </div>
+          <p>
+            <code>::before</code> và <code>::after</code> thường dùng cho icon,
+            badge, quote mark, overlay hoặc decoration.
+          </p>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-pseudo-generated"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-pseudo-generated" hidden><code data-live-code="generatedPseudo"></code></pre>
+        </article>
+
+        <article class="pseudo-card" data-demo="textPseudo">
+          <h3>Text pseudo element</h3>
+          <p class="first-letter-demo" data-target="textPseudo">
+            CSS có thể style chữ cái đầu tiên bằng ::first-letter và dùng nó để tạo điểm nhấn cho đoạn văn.
+          </p>
+          <div class="control-grid">
+            <label class="range-control">size
+              <input type="range" min="24" max="64" value="48" data-control="letterSize">
+              <output data-output="letterSize">48px</output>
+            </label>
+            <label class="field-control">color
+              <select data-control="letterColor">
+                <option value="#e11d48" selected>rose</option>
+                <option value="#2563eb">blue</option>
+                <option value="#f59e0b">amber</option>
+                <option value="#0f9f8f">teal</option>
+              </select>
+            </label>
+            <label class="check-control"><input type="checkbox" data-control="dropCap" checked> float left</label>
+          </div>
+          <p>
+            Dùng <code>::first-letter</code> cho drop cap hoặc phần mở đầu có tính editorial.
+          </p>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-pseudo-text"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-pseudo-text" hidden><code data-live-code="textPseudo"></code></pre>
+        </article>
+
+        <article class="pseudo-card pseudo-nth-card" data-demo="nthPseudo">
+          <h3>Vị trí: first / last / nth</h3>
+          <div class="control-grid">
+            <label class="field-control">selector
+              <select data-control="nthSelector">
+                <option value=":first-child">:first-child</option>
+                <option value=":last-child">:last-child</option>
+                <option value=":first-of-type">:first-of-type</option>
+                <option value=":last-of-type">:last-of-type</option>
+                <option value=":nth-child(2n)" selected>:nth-child(2n)</option>
+                <option value=":nth-child(3)">:nth-child(3)</option>
+                <option value=":nth-last-child(2)">:nth-last-child(2)</option>
+                <option value=":nth-of-type(2)">:nth-of-type(2)</option>
+                <option value=":nth-last-of-type(2)">:nth-last-of-type(2)</option>
+                <option value=":not(.skip)">:not(.skip)</option>
+              </select>
+            </label>
+          </div>
+          <div class="nth-playground" data-target="nthPseudo">
+            <span>span 1</span>
+            <em>em 1</em>
+            <span class="skip">span 2 skip</span>
+            <strong>strong 1</strong>
+            <span>span 3</span>
+            <em>em 2</em>
+            <strong class="skip">strong 2 skip</strong>
+            <span>span 4</span>
+          </div>
+          <p>
+            Đổi selector để so sánh nhóm <code>*-child</code> theo thứ tự con,
+            nhóm <code>*-of-type</code> theo loại tag, và <code>:not(selector)</code>.
+          </p>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-pseudo-nth"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-pseudo-nth" hidden><code data-live-code="nthPseudo"></code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="responsive" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Responsive CSS</p>
+        <h2>Giao diện thích nghi với nhiều kích thước màn hình</h2>
+        <p>
+          Responsive không chỉ là thêm vài breakpoint. Mục tiêu là để layout,
+          chữ, ảnh và khoảng cách co giãn hợp lý từ mobile đến desktop.
+        </p>
+      </div>
+      <div class="responsive-grid">
+        <article>
+          <span>01</span>
+          <h3>Viewport</h3>
+          <p>
+            Luôn có thẻ viewport để trình duyệt mobile đọc đúng chiều rộng thiết bị,
+            thay vì render trang như một desktop thu nhỏ.
+          </p>
+          <pre><code>&lt;meta name="viewport"
+      content="width=device-width, initial-scale=1"&gt;</code></pre>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Fluid layout</h3>
+          <p>
+            Ưu tiên <code>%</code>, <code>fr</code>, <code>minmax()</code>,
+            <code>max-width</code> và <code>clamp()</code> để khối tự co giãn
+            trước khi cần breakpoint.
+          </p>
+          <pre><code>.container {
+  width: min(100% - 32px, 1120px);
+}</code></pre>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Media query</h3>
+          <p>
+            Dùng <code>@media</code> khi layout cần đổi cấu trúc rõ ràng, ví dụ
+            từ 3 cột desktop xuống 1 cột trên mobile.
+          </p>
+          <pre><code>@media (max-width: 680px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Ảnh và text</h3>
+          <p>
+            Ảnh nên co theo container, text cần được phép xuống dòng. Khi item
+            trong flex/grid bị tràn, kiểm tra <code>min-width: 0</code>.
+          </p>
+          <pre><code>img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+        </article>
+      </div>
+      <div class="responsive-compare">
+        <div class="device-stack" aria-label="Minh họa responsive">
+          <span class="device desktop">Desktop: 3 cột</span>
+          <span class="device tablet">Tablet: 2 cột</span>
+          <span class="device mobile">Mobile: 1 cột</span>
+        </div>
+        <div>
+          <h3>Cách nghĩ nhanh</h3>
+          <p>
+            Bắt đầu bằng layout linh hoạt. Sau đó thêm breakpoint ở nơi giao diện
+            thật sự gãy: chữ bị chật, card quá hẹp, bảng tràn hoặc thao tác khó bấm.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Trắc nghiệm</p>
+        <h2>Kiểm tra nhanh kiến thức CSS</h2>
+        <p>
+          Chọn một đáp án cho mỗi câu. Kết quả sẽ hiện ngay để cả lớp có thể
+          thảo luận lại phần kiến thức liên quan.
+        </p>
+      </div>
+      <div class="quiz-shell">
+        <div class="quiz-score" aria-live="polite">
+          <strong data-quiz-score>0/8</strong>
+          <span data-quiz-note>Chưa chọn đáp án nào.</span>
+        </div>
+        <div class="quiz-grid">
+          <fieldset class="quiz-card" data-answer="B">
+            <legend><span>1</span>Trong một CSS rule, phần nào dùng để chọn phần tử HTML cần style?</legend>
+            <label><input type="radio" name="quiz-1" value="A"> <b>A.</b> Value</label>
+            <label><input type="radio" name="quiz-1" value="B"> <b>B.</b> Selector</label>
+            <label><input type="radio" name="quiz-1" value="C"> <b>C.</b> Declaration</label>
+            <label><input type="radio" name="quiz-1" value="D"> <b>D.</b> Property</label>
+            <p data-quiz-feedback>Selector đứng trước cặp ngoặc nhọn và quyết định rule áp dụng cho phần tử nào.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="C">
+            <legend><span>2</span>Selector nào chọn phần tử có class <code>primary</code>?</legend>
+            <label><input type="radio" name="quiz-2" value="A"> <b>A.</b> <code>#primary</code></label>
+            <label><input type="radio" name="quiz-2" value="B"> <b>B.</b> <code>primary</code></label>
+            <label><input type="radio" name="quiz-2" value="C"> <b>C.</b> <code>.primary</code></label>
+            <label><input type="radio" name="quiz-2" value="D"> <b>D.</b> <code>[primary]</code></label>
+            <p data-quiz-feedback>Dấu chấm dùng cho class, dấu thăng dùng cho id.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="D">
+            <legend><span>3</span>Nếu hai rule có cùng độ ưu tiên, rule nào thường thắng?</legend>
+            <label><input type="radio" name="quiz-3" value="A"> <b>A.</b> Rule ngắn hơn</label>
+            <label><input type="radio" name="quiz-3" value="B"> <b>B.</b> Rule nằm trong file nhỏ hơn</label>
+            <label><input type="radio" name="quiz-3" value="C"> <b>C.</b> Rule viết trước</label>
+            <label><input type="radio" name="quiz-3" value="D"> <b>D.</b> Rule viết sau</label>
+            <p data-quiz-feedback>Trong cascade, khi specificity bằng nhau thì source order quyết định: rule viết sau thắng.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="A">
+            <legend><span>4</span>Với <code>box-sizing: border-box</code>, <code>width</code> bao gồm phần nào?</legend>
+            <label><input type="radio" name="quiz-4" value="A"> <b>A.</b> Content, padding và border</label>
+            <label><input type="radio" name="quiz-4" value="B"> <b>B.</b> Chỉ content</label>
+            <label><input type="radio" name="quiz-4" value="C"> <b>C.</b> Chỉ margin</label>
+            <label><input type="radio" name="quiz-4" value="D"> <b>D.</b> Content và margin</label>
+            <p data-quiz-feedback><code>border-box</code> giữ tổng width ổn định; content bên trong tự co lại khi padding/border tăng.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="B">
+            <legend><span>5</span>Khi cần căn item theo một trục trong một hàng hoặc cột, property nào thường dùng?</legend>
+            <label><input type="radio" name="quiz-5" value="A"> <b>A.</b> <code>display: inline</code></label>
+            <label><input type="radio" name="quiz-5" value="B"> <b>B.</b> <code>display: flex</code></label>
+            <label><input type="radio" name="quiz-5" value="C"> <b>C.</b> <code>float: right</code></label>
+            <label><input type="radio" name="quiz-5" value="D"> <b>D.</b> <code>position: static</code></label>
+            <p data-quiz-feedback>Flex phù hợp cho layout một chiều: hàng hoặc cột, kèm <code>gap</code>, <code>align-items</code>, <code>justify-content</code>.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="D">
+            <legend><span>6</span>Selector nào tạo nội dung ảo sau phần tử mà không cần thêm tag HTML?</legend>
+            <label><input type="radio" name="quiz-6" value="A"> <b>A.</b> <code>:hover</code></label>
+            <label><input type="radio" name="quiz-6" value="B"> <b>B.</b> <code>:focus</code></label>
+            <label><input type="radio" name="quiz-6" value="C"> <b>C.</b> <code>:checked</code></label>
+            <label><input type="radio" name="quiz-6" value="D"> <b>D.</b> <code>::after</code></label>
+            <p data-quiz-feedback><code>::after</code> là pseudo element, thường đi cùng <code>content</code> để tạo badge, icon hoặc decoration.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="B">
+            <legend><span>7</span>Media query nào thường dùng để áp style khi màn hình nhỏ hơn hoặc bằng 680px?</legend>
+            <label><input type="radio" name="quiz-7" value="A"> <b>A.</b> <code>@media (min-width: 680px)</code></label>
+            <label><input type="radio" name="quiz-7" value="B"> <b>B.</b> <code>@media (max-width: 680px)</code></label>
+            <label><input type="radio" name="quiz-7" value="C"> <b>C.</b> <code>@font-face 680px</code></label>
+            <label><input type="radio" name="quiz-7" value="D"> <b>D.</b> <code>:hover 680px</code></label>
+            <p data-quiz-feedback><code>max-width</code> thường dùng cho style mobile/tablet nhỏ hơn một breakpoint cụ thể.</p>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="A">
+            <legend><span>8</span>Selector attribute nào chọn link có <code>href</code> chứa chuỗi <code>docs</code>?</legend>
+            <label><input type="radio" name="quiz-8" value="A"> <b>A.</b> <code>[href*="docs"]</code></label>
+            <label><input type="radio" name="quiz-8" value="B"> <b>B.</b> <code>[href^="docs"]</code></label>
+            <label><input type="radio" name="quiz-8" value="C"> <b>C.</b> <code>[href~="docs"]</code></label>
+            <label><input type="radio" name="quiz-8" value="D"> <b>D.</b> <code>#docs</code></label>
+            <p data-quiz-feedback><code>*=</code> nghĩa là chứa chuỗi; <code>^=</code> là bắt đầu bằng, còn <code>~=</code> là chứa một từ trong danh sách.</p>
+          </fieldset>
+        </div>
+      </div>
+    </section>
+
+    <section id="tips" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Tips thực tế</p>
+        <h2>Kinh nghiệm dùng và debug CSS</h2>
+        <p>
+          Một vài thói quen nhỏ giúp CSS dễ bảo trì hơn, debug nhanh hơn và
+          tránh những lỗi thường gặp khi làm giao diện thật.
+        </p>
+      </div>
+      <div class="tips-grid">
+        <article>
+          <span>01</span>
+          <p>Dùng DevTools inspect đúng element trước khi sửa CSS. Xem tab Computed để biết giá trị cuối cùng đến từ rule nào, file nào và có bị rule khác gạch bỏ không.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <p>Ưu tiên class cho component thay vì bám quá chặt vào tag hoặc cấu trúc cha con. Selector ngắn, có chủ đích sẽ dễ tái sử dụng và dễ override hơn.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <p>Đặt <code>box-sizing: border-box</code> cho layout để padding và border nằm trong kích thước đã khai báo. Cách này giúp card, input, column ít bị phình ngoài khung.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <p>Khi layout lệch, bật tạm <code>outline: 1px solid red</code> cho các khối nghi ngờ. Outline không làm đổi kích thước box nên rất tiện để debug spacing.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <p>Dùng <code>gap</code> trong flex/grid thay vì đặt margin rải rác trên từng item. Khi thêm, xóa hoặc reorder item, khoảng cách vẫn ổn định hơn.</p>
+        </article>
+        <article>
+          <span>06</span>
+          <p>Trước khi tăng <code>z-index</code>, kiểm tra phần tử có <code>position</code> phù hợp chưa và cha có tạo stacking context không. Nhiều lỗi overlay không phải do số z-index quá nhỏ.</p>
+        </article>
+        <article>
+          <span>07</span>
+          <p>Nếu <code>width</code> hoặc <code>height</code> không có tác dụng, kiểm tra phần tử có đang là <code>inline</code> không. Đổi sang <code>inline-block</code>, <code>block</code> hoặc layout flex/grid nếu cần đặt kích thước.</p>
+        </article>
+        <article>
+          <span>08</span>
+          <p>Không lạm dụng <code>!important</code> vì nó làm cascade khó đoán và khó override về sau. Hãy thử giảm specificity, đổi thứ tự import hoặc sửa selector trước.</p>
+        </article>
+        <article>
+          <span>09</span>
+          <p>Luôn style trạng thái tương tác như <code>:hover</code>, <code>:focus</code>, <code>:disabled</code>, <code>:active</code>. Người dùng chuột, bàn phím và screen reader đều cần tín hiệu trạng thái rõ ràng.</p>
+        </article>
+        <article>
+          <span>10</span>
+          <p>Dùng biến CSS cho màu, spacing, border radius và shadow phổ biến. Khi cần đổi theme hoặc chỉnh design system, bạn sửa một nơi thay vì săn từng giá trị rải rác.</p>
+        </article>
+        <article>
+          <span>11</span>
+          <p>Debug responsive bằng cách kéo viewport từ rộng xuống hẹp, không chỉ test vài kích thước cố định. Lỗi thường xuất hiện ở khoảng giữa breakpoint, nơi text bắt đầu wrap.</p>
+        </article>
+        <article>
+          <span>12</span>
+          <p>Khi text bị tràn, kiểm tra <code>min-width</code>, <code>overflow-wrap</code> và grid/flex item. Với flex/grid, thêm <code>min-width: 0</code> cho item con thường giải quyết nhiều ca khó chịu.</p>
+        </article>
+        <article>
+          <span>13</span>
+          <p>Đừng dùng <code>position: absolute</code> để làm layout chính nếu flex hoặc grid giải quyết được. Absolute phù hợp cho badge, tooltip, overlay nhỏ vì nó thoát khỏi luồng layout bình thường.</p>
+        </article>
+        <article>
+          <span>14</span>
+          <p>Animation nên có mục đích và thời lượng vừa phải. Với hiệu ứng lặp hoặc chuyển động mạnh, cân nhắc <code>prefers-reduced-motion</code> để tôn trọng người dùng nhạy cảm với chuyển động.</p>
+        </article>
+        <article>
+          <span>15</span>
+          <p>Khi CSS không chạy, kiểm tra lỗi rất cơ bản trước: file CSS có được load không, selector có match không, property có bị typo không. DevTools Network và tab Styles thường trả lời nhanh nhất.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Bài giảng CSS căn bản - có thể mở trực tiếp file <code>index.html</code> trong trình duyệt.</p>
+  </footer>
+  <script>
+    const getControl = (panel, name) => panel.querySelector(`[data-control="${name}"]`);
+    const getTarget = (panel, name) => panel.querySelector(`[data-target="${name}"]`);
+    const getValue = (panel, name) => getControl(panel, name).value;
+    const isChecked = (panel, name) => getControl(panel, name).checked;
+    const toSeconds = (value) => `${(Number(value) / 100).toFixed(2).replace(/0$/, "").replace(/\.0$/, "")}s`;
+
+    const setOutput = (panel, name, value) => {
+      const output = panel.querySelector(`[data-output="${name}"]`);
+      if (output) {
+        output.textContent = value;
+      }
+    };
+
+      const setCode = (panel, css) => {
+        const code = panel.querySelector("[data-live-code]");
+        if (code) {
+          code.textContent = css.trim();
+        }
+      };
+
+      const setMetric = (panel, name, value) => {
+        const metric = panel.querySelector(`[data-metric="${name}"]`);
+        if (metric) {
+          metric.textContent = value;
+        }
+      };
+
+    const demoUpdaters = {
+      cascadePriority(panel) {
+        const rules = [
+          {
+            id: "tag",
+            label: "tag selector",
+            control: "cascadeTag",
+            color: "#64748b",
+            result: "Tag selector đang thắng vì chưa có rule mạnh hơn được bật."
+          },
+          {
+            id: "class",
+            label: "class selector",
+            control: "cascadeClass",
+            color: "#2563eb",
+            result: "Class selector thắng tag selector vì class cụ thể hơn tag."
+          },
+          {
+            id: "classLate",
+            label: "class viết sau",
+            control: "cascadeClassLate",
+            color: "#0f9f8f",
+            result: "Rule class viết sau đang thắng vì cùng specificity nhưng xuất hiện sau."
+          },
+          {
+            id: "id",
+            label: "id selector",
+            control: "cascadeId",
+            color: "#f59e0b",
+            result: "ID selector đang thắng vì id cụ thể hơn class và tag."
+          },
+          {
+            id: "inline",
+            label: "inline style",
+            control: "cascadeInline",
+            color: "#16a34a",
+            result: "Inline style đang thắng vì nó nằm trực tiếp trên element."
+          },
+          {
+            id: "important",
+            label: "!important",
+            control: "cascadeImportant",
+            color: "#e11d48",
+            result: "!important đang thắng vì importance được xét trước specificity."
+          }
+        ];
+        const enabledRules = rules.filter((rule) => isChecked(panel, rule.control));
+        const winner = enabledRules[enabledRules.length - 1];
+        const button = getTarget(panel, "cascadeButton");
+        const result = panel.querySelector('[data-output="cascadeWinner"]');
+
+        panel.querySelectorAll("[data-rule]").forEach((card) => {
+          const rule = rules.find((item) => item.id === card.dataset.rule);
+          const isEnabled = rule && isChecked(panel, rule.control);
+          const isWinner = winner && card.dataset.rule === winner.id;
+
+          card.classList.toggle("is-off", !isEnabled);
+          card.classList.toggle("is-lost", Boolean(isEnabled && !isWinner));
+          card.classList.toggle("is-winner", Boolean(isWinner));
+        });
+
+        if (winner) {
+          button.style.background = winner.color;
+          button.textContent = `Button mẫu - ${winner.label}`;
+          result.textContent = winner.result;
+        } else {
+          button.style.background = "#ffffff";
+          button.style.color = "#0f172a";
+          button.textContent = "Button mẫu";
+          result.textContent = "Chưa bật rule nào nên button chỉ còn style mặc định.";
+          return;
+        }
+
+        button.style.color = "#ffffff";
+      },
+
+      background(panel) {
+        const target = getTarget(panel, "background");
+        const bgColor = getValue(panel, "bgColor");
+        const bgSize = getValue(panel, "bgSize");
+        const borderOn = isChecked(panel, "borderOn");
+        const borderWidth = getValue(panel, "borderWidth");
+        const borderColor = getValue(panel, "borderColor");
+        const hasImage = isChecked(panel, "bgImage");
+
+        setOutput(panel, "borderWidth", `${borderWidth}px`);
+        target.style.backgroundColor = bgColor;
+        target.style.backgroundImage = hasImage
+          ? `radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 7px, transparent 8px),
+               linear-gradient(135deg, ${bgColor}, #0f9f8f)`
+          : "none";
+        target.style.backgroundRepeat = hasImage ? "repeat, no-repeat" : "no-repeat";
+        target.style.backgroundSize = hasImage ? `${bgSize}, cover` : "auto";
+        target.style.border = borderOn ? `${borderWidth}px solid ${borderColor}` : "0";
+
+        setCode(panel, `.bg-surface {
+  background-color: ${bgColor};
+${hasImage ? `  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 7px, transparent 8px),
+    linear-gradient(135deg, ${bgColor}, #0f9f8f);
+  background-repeat: repeat, no-repeat;
+  background-size: ${bgSize}, cover;` : "  background-image: none;"}
+  border: ${borderOn ? `${borderWidth}px solid ${borderColor}` : "0"};
+}`);
+      },
+
+      flex(panel) {
+        const target = getTarget(panel, "flex");
+        const displayFlex = isChecked(panel, "displayFlex");
+        const direction = getValue(panel, "flexDirection");
+        const alignItems = getValue(panel, "alignItems");
+        const justifyContent = getValue(panel, "justifyContent");
+        const gap = getValue(panel, "gap");
+
+        setOutput(panel, "gap", `${gap}px`);
+        target.style.display = displayFlex ? "flex" : "block";
+        target.style.flexDirection = direction;
+        target.style.alignItems = alignItems;
+        target.style.justifyContent = justifyContent;
+        target.style.gap = `${gap}px`;
+        target.querySelectorAll("b").forEach((item) => {
+          item.style.width = displayFlex && alignItems === "stretch" ? "auto" : "48px";
+        });
+
+        setCode(panel, `.flex-action {
+  display: ${displayFlex ? "flex" : "block"};
+${displayFlex ? `  flex-direction: ${direction};
+  align-items: ${alignItems};
+  justify-content: ${justifyContent};
+  gap: ${gap}px;` : "  /* flex-direction, align-items, justify-content và gap cần display: flex */"}
+}`);
+      },
+
+      layoutCompare(panel) {
+        const target = getTarget(panel, "layoutCompare");
+        const items = [...target.querySelectorAll("span")];
+        const mode = getValue(panel, "layoutMode");
+        const itemCount = getValue(panel, "layoutItems");
+        const columns = getValue(panel, "gridColumns");
+        const flexItemWidth = getValue(panel, "flexItemWidth");
+        const gap = getValue(panel, "layoutGap");
+
+        setOutput(panel, "layoutItems", itemCount);
+        setOutput(panel, "gridColumns", columns);
+        setOutput(panel, "flexItemWidth", `${flexItemWidth}px`);
+        setOutput(panel, "layoutGap", `${gap}px`);
+
+        target.style.display = mode;
+        target.style.gap = `${gap}px`;
+        target.style.gridTemplateColumns = mode === "grid" ? `repeat(${columns}, minmax(0, 1fr))` : "";
+        target.style.flexWrap = mode === "flex" ? "wrap" : "";
+        target.style.alignContent = mode === "flex" ? "flex-start" : "";
+
+        items.forEach((item, index) => {
+          item.hidden = index >= Number(itemCount);
+          item.style.flex = mode === "flex" ? `0 0 ${flexItemWidth}px` : "";
+          item.style.width = "";
+        });
+
+        setCode(panel, mode === "grid"
+          ? `.layout-compare {
+  display: grid;
+  grid-template-columns: repeat(${columns}, minmax(0, 1fr));
+  gap: ${gap}px;
+}`
+          : `.layout-compare {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${gap}px;
+}
+
+.layout-compare span {
+  flex: 0 0 ${flexItemWidth}px;
+}`);
+      },
+
+      position(panel) {
+        const badge = getTarget(panel, "positionBadge");
+        const absoluteOn = isChecked(panel, "absoluteOn");
+        const horizontal = getValue(panel, "horizontal");
+        const vertical = getValue(panel, "vertical");
+        const xOffset = getValue(panel, "xOffset");
+        const yOffset = getValue(panel, "yOffset");
+
+        setOutput(panel, "xOffset", `${xOffset}px`);
+        setOutput(panel, "yOffset", `${yOffset}px`);
+
+        badge.style.position = absoluteOn ? "absolute" : "static";
+        badge.style.top = "auto";
+        badge.style.right = "auto";
+        badge.style.bottom = "auto";
+        badge.style.left = "auto";
+
+        if (absoluteOn) {
+          badge.style[horizontal] = `${xOffset}px`;
+          badge.style[vertical] = `${yOffset}px`;
+        }
+
+        setCode(panel, `.position-stage {
+  position: relative;
+}
+
+.position-stage em {
+  position: ${absoluteOn ? "absolute" : "static"};
+${absoluteOn ? `  ${horizontal}: ${xOffset}px;
+  ${vertical}: ${yOffset}px;` : "  /* top/right/bottom/left không có tác dụng khi position: static */"}
+}`);
+      },
+
+      spacing(panel) {
+        const box = getTarget(panel, "spacingBox");
+        const content = getTarget(panel, "spacingContent");
+        const width = getValue(panel, "boxWidth");
+        const height = getValue(panel, "boxHeight");
+        const padding = getValue(panel, "boxPadding");
+        const margin = getValue(panel, "boxMargin");
+        const boxSizing = getValue(panel, "boxSizing");
+        const border = getValue(panel, "boxBorder");
+        const contentWidth = getValue(panel, "contentWidth");
+        const contentHeight = getValue(panel, "contentHeight");
+
+        setOutput(panel, "boxWidth", `${width}px`);
+        setOutput(panel, "boxHeight", `${height}px`);
+        setOutput(panel, "boxPadding", `${padding}px`);
+        setOutput(panel, "boxMargin", `${margin}px`);
+        setOutput(panel, "boxBorder", `${border}px`);
+        setOutput(panel, "contentWidth", `${contentWidth}px`);
+        setOutput(panel, "contentHeight", `${contentHeight}px`);
+
+        box.style.width = `${width}px`;
+        box.style.height = `${height}px`;
+        box.style.padding = `${padding}px`;
+        box.style.marginTop = `${margin}px`;
+        box.style.boxSizing = boxSizing;
+        box.style.borderWidth = `${border}px`;
+        content.style.width = `${contentWidth}px`;
+        content.style.height = `${contentHeight}px`;
+
+        const declaredWidth = Number(width);
+        const paddingTotal = Number(padding) * 2;
+        const borderTotal = Number(border) * 2;
+        const visualWidth = boxSizing === "content-box"
+          ? declaredWidth + paddingTotal + borderTotal
+          : declaredWidth;
+        const contentArea = boxSizing === "content-box"
+          ? declaredWidth
+          : Math.max(0, declaredWidth - paddingTotal - borderTotal);
+
+        setMetric(panel, "declaredWidth", `${declaredWidth}px`);
+        setMetric(panel, "paddingTotal", `${paddingTotal}px`);
+        setMetric(panel, "borderTotal", `${borderTotal}px`);
+        setMetric(panel, "visualWidth", `${visualWidth}px`);
+        setMetric(panel, "contentArea", `${contentArea}px`);
+        setMetric(
+          panel,
+          "formula",
+          boxSizing === "content-box"
+            ? `content-box: total = width + padding*2 + border*2 = ${declaredWidth} + ${paddingTotal} + ${borderTotal} = ${visualWidth}px`
+            : `border-box: total = width = ${visualWidth}px; content tự co còn ${contentArea}px`
+        );
+
+        setCode(panel, `.spacing-action > div {
+  width: ${width}px;
+  height: ${height}px;
+  padding: ${padding}px;
+  border: ${border}px solid #f97316;
+  margin-top: ${margin}px;
+  box-sizing: ${boxSizing};
+}
+
+.spacing-action span {
+  width: ${contentWidth}px;
+  height: ${contentHeight}px;
+}`);
+      },
+
+      overflow(panel) {
+        const target = getTarget(panel, "overflow");
+        const overflow = getValue(panel, "overflow");
+        const maxHeight = getValue(panel, "maxHeight");
+        const opacity = (Number(getValue(panel, "opacity")) / 100).toFixed(2);
+
+        setOutput(panel, "maxHeight", `${maxHeight}px`);
+        setOutput(panel, "opacity", opacity);
+        target.style.maxHeight = `${maxHeight}px`;
+        target.style.overflow = overflow;
+        target.style.opacity = opacity;
+
+        setCode(panel, `.overflow-action {
+  max-height: ${maxHeight}px;
+  overflow: ${overflow};
+  opacity: ${opacity};
+}`);
+      },
+
+      text(panel) {
+        const target = getTarget(panel, "text");
+        const paragraph = target.querySelector("p");
+        const list = target.querySelector("ul");
+        const chip = getTarget(panel, "floatChip");
+        const fontSize = getValue(panel, "fontSize");
+        const fontWeight = getValue(panel, "fontWeight");
+        const lineHeight = (Number(getValue(panel, "lineHeight")) / 10).toFixed(1);
+        const listStyle = getValue(panel, "listStyle");
+        const floatValue = getValue(panel, "float");
+
+        setOutput(panel, "fontSize", `${fontSize}px`);
+        setOutput(panel, "lineHeight", lineHeight);
+        paragraph.style.fontSize = `${fontSize}px`;
+        paragraph.style.fontWeight = fontWeight;
+        paragraph.style.lineHeight = lineHeight;
+        list.style.listStyleType = listStyle;
+        chip.style.float = floatValue;
+
+        setCode(panel, `.text-action p {
+  font-size: ${fontSize}px;
+  font-weight: ${fontWeight};
+  line-height: ${lineHeight};
+}
+
+.text-action ul {
+  list-style: ${listStyle};
+}
+
+.float-chip {
+  float: ${floatValue};
+}`);
+      },
+
+      animation(panel) {
+        const target = getTarget(panel, "animation");
+        const dot = target.querySelector("i");
+        const status = getTarget(panel, "animationStatus");
+        const animationOn = isChecked(panel, "animationOn");
+        const duration = toSeconds(getValue(panel, "duration"));
+        const delay = toSeconds(getValue(panel, "delay"));
+        const timing = getValue(panel, "timing");
+        const direction = getValue(panel, "direction");
+        const iteration = getValue(panel, "iteration");
+
+        setOutput(panel, "duration", duration);
+        setOutput(panel, "delay", delay);
+        dot.style.animation = animationOn ? `slide ${duration} ${timing} ${delay} ${iteration} ${direction}` : "none";
+        status.textContent = animationOn
+          ? `animation: slide ${duration} ${timing} ${delay} ${iteration} ${direction}`
+          : "animation: none";
+
+        setCode(panel, `.motion-track i {
+  animation: ${animationOn ? `slide ${duration} ${timing} ${delay} ${iteration} ${direction}` : "none"};
+}
+
+@keyframes slide {
+  from {
+    left: 24px;
+  }
+  to {
+    left: calc(100% - 54px);
+  }
+}`);
+      },
+
+      display(panel) {
+        const target = getTarget(panel, "display");
+        const chips = target.querySelectorAll(".display-chip");
+        const display = getValue(panel, "display");
+        const center = isChecked(panel, "centerItems");
+        const width = getValue(panel, "displayWidth");
+        const height = getValue(panel, "displayHeight");
+        const gap = getValue(panel, "displayGap");
+
+        setOutput(panel, "displayWidth", `${width}px`);
+        setOutput(panel, "displayHeight", `${height}px`);
+        setOutput(panel, "displayGap", `${gap}px`);
+        chips.forEach((chip) => {
+          chip.style.display = display;
+          chip.style.margin = display === "none" ? "" : `${gap}px`;
+          chip.style.width = display === "inline" || display === "none" ? "" : `${width}px`;
+          chip.style.height = display === "inline" || display === "none" ? "" : `${height}px`;
+          chip.style.textAlign = center ? "center" : "left";
+          chip.style.alignItems = center && display === "flex" ? "center" : "";
+          chip.style.justifyContent = center && display === "flex" ? "center" : "";
+          chip.style.placeItems = center && display === "grid" ? "center" : "";
+          chip.style.lineHeight = center && (display === "block" || display === "inline-block") ? `${Math.max(0, Number(height) - 16)}px` : "";
+        });
+
+        const sizeCode = display === "inline"
+          ? "  /* width/height không có tác dụng với display: inline */"
+          : display === "none"
+            ? "  /* element biến mất khỏi layout */"
+            : `  width: ${width}px;
+  height: ${height}px;`;
+
+        setCode(panel, `.display-action .display-chip {
+  display: ${display};
+${display !== "none" ? `  margin: ${gap}px;` : ""}
+${sizeCode}
+${center ? "  text-align: center;" : ""}
+}`);
+      },
+
+      statePseudo(panel) {
+        if (!panel.dataset.stateReady) {
+          const setToken = (name, isOn) => {
+            const token = panel.querySelector(`[data-state-readout="${name}"]`);
+            if (token) {
+              token.classList.toggle("is-on", isOn);
+            }
+          };
+          const hoverTrigger = panel.querySelector(".pseudo-link-demo");
+          const activeTrigger = getTarget(panel, "activePseudo");
+          const focusTrigger = getTarget(panel, "focusPseudo");
+
+          hoverTrigger.addEventListener("mouseenter", () => setToken("hover", true));
+          hoverTrigger.addEventListener("mouseover", () => setToken("hover", true));
+          hoverTrigger.addEventListener("mouseleave", () => setToken("hover", false));
+          hoverTrigger.addEventListener("mouseout", () => setToken("hover", false));
+
+          activeTrigger.addEventListener("pointerdown", () => setToken("active", true));
+          activeTrigger.addEventListener("mousedown", () => setToken("active", true));
+          activeTrigger.addEventListener("keydown", (event) => {
+            if (event.key === " " || event.key === "Enter") {
+              setToken("active", true);
+            }
+          });
+          ["pointerup", "mouseup", "mouseleave", "blur", "keyup", "click"].forEach((eventName) => {
+            activeTrigger.addEventListener(eventName, () => setToken("active", false));
+          });
+
+          focusTrigger.addEventListener("focus", () => setToken("focus", true));
+          focusTrigger.addEventListener("focusin", () => setToken("focus", true));
+          focusTrigger.addEventListener("click", () => setToken("focus", true));
+          focusTrigger.addEventListener("blur", () => setToken("focus", false));
+          focusTrigger.addEventListener("focusout", () => setToken("focus", false));
+
+          panel.dataset.stateReady = "true";
+        }
+
+        setCode(panel, `/* :link áp dụng cho link chưa từng được truy cập */
+.pseudo-link-demo:link {
+  color: #2563eb;
+}
+
+/* :visited áp dụng cho link đã được trình duyệt ghi nhận là đã truy cập */
+.pseudo-link-demo:visited {
+  color: #7c3aed;
+}
+
+/* :hover bật khi con trỏ đang nằm trên phần tử */
+.pseudo-link-demo:hover,
+.pseudo-button-demo:hover {
+  background: #0f9f8f;
+  color: #ffffff;
+}
+
+/* :active chỉ tồn tại trong lúc đang nhấn giữ */
+.pseudo-button-demo:active {
+  transform: translateY(2px) scale(0.98);
+}
+
+/* :focus bật khi input đang nhận bàn phím */
+.pseudo-input-demo:focus {
+  border-color: #2563eb;
+  outline: 3px solid rgba(37, 99, 235, 0.18);
+}
+
+/* Dòng mô tả trong demo sáng lên nhờ sibling selector */
+.pseudo-link-demo:hover + .state-token,
+.pseudo-button-demo:active + .state-token,
+.pseudo-input-demo:focus + .state-token {
+  background: #ecfdf5;
+  border-color: #86efac;
+}`);
+      },
+
+      formPseudo(panel) {
+        const checked = isChecked(panel, "checkedState");
+        const disabled = isChecked(panel, "disableState");
+        const empty = isChecked(panel, "emptyState");
+        const disabledButton = getTarget(panel, "disabledPseudo");
+        const emptyBox = getTarget(panel, "emptyPseudo");
+
+        disabledButton.disabled = disabled;
+        emptyBox.textContent = empty ? "" : "Có nội dung";
+
+        setCode(panel, `/* Checkbox hiện tại: ${checked ? "checked" : "unchecked"} */
+.pseudo-check-demo input:checked + span {
+  color: #16a34a;
+  font-weight: 900;
+}
+
+/* Button hiện tại: ${disabled ? "disabled" : "enabled"} */
+.pseudo-disabled-demo:disabled {
+  background: #e2e8f0;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Ô demo hiện tại: ${empty ? "empty" : "có nội dung"} */
+.pseudo-empty-demo:empty {
+  background: repeating-linear-gradient(
+    45deg,
+    #fef3c7 0 10px,
+    #fde68a 10px 20px
+  );
+}`);
+      },
+
+      generatedPseudo(panel) {
+        const badge = getTarget(panel, "generatedBadge");
+        const beforeOn = isChecked(panel, "beforeOn");
+        const afterOn = isChecked(panel, "afterOn");
+        const afterText = getValue(panel, "afterText").replace(/["\\]/g, "").trim() || "NEW";
+        const tone = getValue(panel, "badgeTone");
+
+        badge.classList.toggle("no-before", !beforeOn);
+        badge.classList.toggle("no-after", !afterOn);
+        badge.dataset.after = afterText;
+        badge.style.setProperty("--badge-bg", tone);
+
+        setCode(panel, `.generated-badge {
+  background: ${tone};
+}
+
+.generated-badge::before {
+  content: ${beforeOn ? "\"★\"" : "none"};
+}
+
+.generated-badge::after {
+  content: ${afterOn ? `"${afterText}"` : "none"};
+}
+
+.generated-quote::before {
+  content: "“";
+}
+
+.generated-quote::after {
+  content: "”";
+}`);
+      },
+
+      textPseudo(panel) {
+        const target = getTarget(panel, "textPseudo");
+        const size = getValue(panel, "letterSize");
+        const color = getValue(panel, "letterColor");
+        const dropCap = isChecked(panel, "dropCap");
+
+        setOutput(panel, "letterSize", `${size}px`);
+        target.style.setProperty("--first-letter-size", `${size}px`);
+        target.style.setProperty("--first-letter-color", color);
+        target.style.setProperty("--first-letter-float", dropCap ? "left" : "none");
+        target.style.setProperty("--first-letter-margin", dropCap ? "8px" : "0");
+
+        setCode(panel, `.first-letter-demo::first-letter {
+  float: ${dropCap ? "left" : "none"};
+  margin-right: ${dropCap ? "8px" : "0"};
+  color: ${color};
+  font-size: ${size}px;
+  font-weight: 900;
+  line-height: 0.9;
+}`);
+      },
+
+      nthPseudo(panel) {
+        const selector = getValue(panel, "nthSelector");
+        const target = getTarget(panel, "nthPseudo");
+        const items = [...target.children];
+        const selected = target.querySelectorAll(`:scope > ${selector}`);
+
+        items.forEach((item) => item.classList.remove("is-selected"));
+        selected.forEach((item) => item.classList.add("is-selected"));
+
+        setCode(panel, `.nth-playground > ${selector} {
+  background: #e11d48;
+  color: #ffffff;
+  border-color: #e11d48;
+}`);
+      }
+    };
+
+    document.querySelectorAll("[data-demo]").forEach((panel) => {
+      const update = () => demoUpdaters[panel.dataset.demo]?.(panel);
+
+      panel.querySelectorAll("[data-control]").forEach((control) => {
+        control.addEventListener("input", update);
+        control.addEventListener("change", update);
+      });
+
+      update();
+    });
+
+    document.querySelectorAll("[data-code-toggle]").forEach((button) => {
+      const codeBlock = document.getElementById(button.getAttribute("aria-controls"));
+
+      button.addEventListener("click", () => {
+        const isOpen = button.getAttribute("aria-expanded") === "true";
+
+        button.setAttribute("aria-expanded", String(!isOpen));
+        button.textContent = isOpen ? "Show code" : "Hide code";
+
+        if (codeBlock) {
+          codeBlock.hidden = isOpen;
+        }
+      });
+    });
+
+    const quizCards = [...document.querySelectorAll(".quiz-card")];
+    const quizScore = document.querySelector("[data-quiz-score]");
+    const quizNote = document.querySelector("[data-quiz-note]");
+
+    const updateQuiz = () => {
+      let answered = 0;
+      let correct = 0;
+
+      quizCards.forEach((card) => {
+        const answer = card.dataset.answer;
+        const selected = card.querySelector("input:checked");
+        const labels = [...card.querySelectorAll("label")];
+
+        card.classList.toggle("is-answered", Boolean(selected));
+        card.dataset.state = "";
+
+        labels.forEach((label) => {
+          const input = label.querySelector("input");
+          const isSelected = selected === input;
+          const isAnswer = input.value === answer;
+
+          label.classList.toggle("is-selected", isSelected);
+          label.classList.toggle("is-answer", Boolean(selected) && isAnswer);
+          label.classList.toggle("is-missed", Boolean(selected) && isSelected && !isAnswer);
+        });
+
+        if (selected) {
+          answered += 1;
+          if (selected.value === answer) {
+            correct += 1;
+            card.dataset.state = "correct";
+          } else {
+            card.dataset.state = "wrong";
+          }
+        }
+      });
+
+      if (quizScore) {
+        quizScore.textContent = `${correct}/${quizCards.length}`;
+      }
+
+      if (quizNote) {
+        quizNote.textContent = answered === 0
+          ? "Chưa chọn đáp án nào."
+          : answered === quizCards.length
+          ? `Đã trả lời đủ ${quizCards.length} câu.`
+          : `Đã chọn ${answered}/${quizCards.length} câu.`;
+      }
+    };
+
+    quizCards.forEach((card) => {
+      card.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("change", updateQuiz);
+      });
+    });
+
+    updateQuiz();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 620" role="img" aria-labelledby="title desc">
+  <title id="title">Sơ đồ học CSS</title>
+  <desc id="desc">Một sơ đồ trực quan mô tả CSS gồm selector, cascade, properties và pseudo selectors.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/>
+      <stop offset="1" stop-color="#ccfbf1"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f8fbff"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#14213d" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="760" height="620" rx="34" fill="url(#bg)"/>
+  <circle cx="90" cy="90" r="44" fill="#ffffff" opacity="0.72"/>
+  <circle cx="690" cy="520" r="66" fill="#ffffff" opacity="0.54"/>
+  <g filter="url(#shadow)">
+    <rect x="124" y="92" width="512" height="126" rx="22" fill="url(#card)" stroke="#d8e2ef"/>
+    <text x="164" y="150" fill="#14213d" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">.button { color: blue; }</text>
+    <text x="166" y="185" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="18">selector + property + value</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="74" y="286" width="178" height="150" rx="20" fill="#ffffff" stroke="#bfdbfe"/>
+    <text x="108" y="338" fill="#2563eb" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">Selector</text>
+    <text x="108" y="374" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="17">.class</text>
+    <text x="108" y="402" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="17">#id</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="292" y="286" width="178" height="150" rx="20" fill="#ffffff" stroke="#99f6e4"/>
+    <text x="326" y="338" fill="#0f9f8f" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">Cascade</text>
+    <text x="326" y="374" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="17">priority</text>
+    <text x="326" y="402" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="17">specificity</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="510" y="286" width="178" height="150" rx="20" fill="#ffffff" stroke="#fecdd3"/>
+    <text x="544" y="338" fill="#e11d48" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">Pseudo</text>
+    <text x="544" y="374" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="17">:hover</text>
+    <text x="544" y="402" fill="#53657d" font-family="Inter, Arial, sans-serif" font-size="17">::before</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="168" y="480" width="424" height="76" rx="20" fill="#14213d"/>
+    <text x="218" y="528" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">Properties tạo giao diện</text>
+  </g>
+  <path d="M163 286 L260 218" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <path d="M381 286 L381 218" stroke="#0f9f8f" stroke-width="6" stroke-linecap="round"/>
+  <path d="M599 286 L500 218" stroke="#e11d48" stroke-width="6" stroke-linecap="round"/>
+  <path d="M252 480 L163 436" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+  <path d="M381 480 L381 436" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+  <path d="M508 480 L599 436" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+</svg>
