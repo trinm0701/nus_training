@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReactJS State & Forms</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./assets/main.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#intro" aria-label="Về đầu bài giảng">
+      <span class="brand-mark">R</span>
+      <span>ReactJS State &amp; Forms</span>
+    </a>
+    <nav class="topnav" aria-label="Điều hướng bài giảng">
+      <a href="#state">useState</a>
+      <a href="#events">Events</a>
+      <a href="#sharing">Sharing</a>
+      <a href="#controlled">Controlled</a>
+      <a href="#forms">Forms</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#tips">Tips</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="intro" class="hero section">
+      <div class="hero-copy">
+        <p class="eyebrow">Buổi training ReactJS</p>
+        <h1>ReactJS: State, Events và Forms</h1>
+        <p class="lead">
+          Bài giảng này tập trung vào cách React phản ứng với tương tác người dùng:
+          lưu state bằng <code>useState</code>, đưa state lên component cha, xử lý event,
+          điều khiển input và submit form một cách rõ ràng.
+        </p>
+        <div class="hero-actions" aria-label="Lối vào nhanh">
+          <a class="primary-action" href="#state">Bắt đầu học</a>
+        </div>
+      </div>
+      <figure class="hero-visual">
+        <img src="./assets/react-state-map.svg" alt="Sơ đồ React UI loop gồm useState, Events, Share state và Forms">
+      </figure>
+    </section>
+
+    <section id="learning-path" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Lộ trình</p>
+        <h2>Học React state theo 7 chặng</h2>
+      </div>
+      <div class="path-grid">
+        <article>
+          <span>1</span>
+          <h3>useState Hook</h3>
+          <p>Nắm cú pháp, next render, updater function, object/array state và lazy initializer.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Event handling</h3>
+          <p>Truyền function vào prop event, đọc event object, đặt tên <code>handle...</code> và <code>on...</code>.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>Sharing State</h3>
+          <p>Tìm component cha gần nhất, đưa state lên cha, truyền value xuống và handler lên/xuống bằng props.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <h3>Controlled components</h3>
+          <p>Biến input thành UI phản chiếu state: <code>value</code>/<code>checked</code> + <code>onChange</code>.</p>
+        </article>
+        <article>
+          <span>5</span>
+          <h3>Forms</h3>
+          <p>Submit bằng <code>onSubmit</code>, <code>FormData</code> hoặc React DOM
+            <code>&lt;form action={fn}&gt;</code>.</p>
+        </article>
+        <article>
+          <span>6</span>
+          <h3>Quiz</h3>
+          <p>Ôn lại bằng câu hỏi có chấm điểm và giải thích ngay sau khi chọn.</p>
+        </article>
+        <article>
+          <span>7</span>
+          <h3>Tips</h3>
+          <p>Checklist tránh lỗi stale state, mutate state, input bị khóa và form submit refresh trang.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="state" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">useState Hook</p>
+        <h2>State là bộ nhớ riêng của component qua mỗi lần render</h2>
+        <p>
+          <code>useState(initialState)</code> trả về cặp <code>[state, setState]</code>.
+          Khi gọi <code>setState</code>, React lên lịch render lại component với giá trị mới.
+          Giá trị state trong đoạn code đang chạy hiện tại không đổi ngay lập tức.
+        </p>
+      </div>
+
+      <div class="two-column">
+        <div class="concept-panel">
+          <h3>Công thức để đọc useState</h3>
+          <div class="state-syntax" aria-label="Cú pháp useState">
+            <span class="token import-token">import</span>
+            <span class="token hook-token">useState</span>
+            <span class="token from-token">from 'react'</span>
+            <span class="token state-token">const [count, setCount]</span>
+            <span class="token init-token">= useState(0)</span>
+          </div>
+          <ul class="plain-list">
+            <li><strong>count</strong>: giá trị state trong lần render hiện tại.</li>
+            <li><strong>setCount</strong>: function yêu cầu React render lại với giá trị mới.</li>
+            <li><strong>initialState</strong>: chỉ dùng ở lần render đầu, có thể là giá trị hoặc initializer function.
+            </li>
+            <li><strong>Updater</strong>: dùng <code>setCount(c =&gt; c + 1)</code> khi tính từ state trước đó.</li>
+          </ul>
+        </div>
+        <div class="code-panel">
+          <pre><code>import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleAdd() {
+    setCount(count + 1);
+  }
+
+  return &lt;button onClick={handleAdd}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="interactive-grid single-row">
+        <article class="demo-panel state-lab" data-demo="stateCounter">
+          <div class="lab-heading compact">
+            <p class="eyebrow">State lab</p>
+            <h3>Thay đổi state và quan sát render mới</h3>
+            <p>
+              Hai nút <code>+3</code> minh họa sự khác nhau giữa truyền next state trực tiếp
+              và truyền updater function.
+            </p>
+          </div>
+          <div class="state-stage">
+            <div class="counter-display">
+              <span>count</span>
+              <strong data-state-count>0</strong>
+              <em>render #<b data-state-render>1</b></em>
+            </div>
+            <div class="state-actions" aria-label="Các hành động cập nhật state">
+              <button type="button" data-state-action="directOne">setCount(count + 1)</button>
+              <button type="button" data-state-action="updaterOne">setCount(c =&gt; c + 1)</button>
+              <button type="button" data-state-action="directThree">Gọi trực tiếp 3 lần</button>
+              <button type="button" data-state-action="updaterThree">Gọi updater 3 lần</button>
+              <button class="ghost-button" type="button" data-state-action="reset">Reset</button>
+            </div>
+            <div class="render-flow" aria-label="Vòng đời cập nhật state">
+              <span>Event handler</span>
+              <i></i>
+              <span>setState queue</span>
+              <i></i>
+              <span>Render mới</span>
+            </div>
+          </div>
+          <div class="state-result">
+            <h4>Hàng đợi cập nhật</h4>
+            <ol data-state-queue>
+              <li>Chưa có update nào.</li>
+            </ol>
+            <p data-state-note>Click một nút để thấy cách React tính next state.</p>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-state"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-state" hidden><code data-live-code></code></pre>
+        </article>
+      </div>
+
+      <div class="state-principles">
+        <div class="lab-heading compact">
+          <p class="eyebrow">5 lưu ý quan trọng</p>
+          <h3>Những lỗi useState hay gặp trong dự án thật</h3>
+          <p>
+            Khi code React bắt đầu có form, danh sách, filter hoặc checkout, phần lớn bug state
+            đến từ 5 nhóm dưới đây.
+          </p>
+        </div>
+
+        <div class="principle-grid">
+          <article>
+            <span class="principle-number">1</span>
+            <h4>Chỉ gọi useState ở top level</h4>
+            <p>
+              Gọi Hook ở cấp cao nhất của component hoặc trong Custom Hook. Không đặt
+              <code>useState</code> trong <code>if</code>, vòng lặp hoặc hàm lồng nhau.
+            </p>
+            <pre><code>// Sai
+if (isAdmin) {
+  const [role, setRole] = useState('admin');
+}
+
+// Đúng
+const [role, setRole] = useState('guest');
+const canEdit = role === 'admin';</code></pre>
+          </article>
+
+          <article>
+            <span class="principle-number">2</span>
+            <h4>Không thay đổi state trực tiếp</h4>
+            <p>
+              Gán lại biến state như <code>count = count + 1</code> không báo cho React render lại.
+              Luôn dùng setter mà <code>useState</code> trả về.
+            </p>
+            <pre><code>// Sai
+count = count + 1;
+
+// Đúng
+setCount(count + 1);</code></pre>
+          </article>
+
+          <article>
+            <span class="principle-number">3</span>
+            <h4>Dùng updater khi dựa trên state cũ</h4>
+            <p>
+              Nếu next state phụ thuộc previous state, dùng callback để tránh lỗi khi React
+              gộp nhiều update trong cùng một event.
+            </p>
+            <pre><code>// Dễ sai khi gọi nhiều lần
+setCount(count + 1);
+
+// An toàn hơn
+setCount(prevCount =&gt; prevCount + 1);</code></pre>
+          </article>
+
+          <article>
+            <span class="principle-number">4</span>
+            <h4>State không đổi ngay trong hàm hiện tại</h4>
+            <p>
+              Sau khi gọi setter, biến state hiện tại vẫn giữ giá trị của render đang chạy.
+              Giá trị mới chỉ xuất hiện ở lần render tiếp theo.
+            </p>
+            <pre><code>
+const [count, setCount] = useState(0);
+
+function handleClick() {
+  const nextCount = count + 1;
+  setCount(nextCount);
+  console.log(count);     // ??
+  console.log(nextCount); // ??
+}</code></pre>
+          </article>
+
+          <article>
+            <span class="principle-number">5</span>
+            <h4>Object và array cần reference mới</h4>
+            <p>
+              Không sửa thuộc tính bên trong object/array rồi truyền lại chính object cũ.
+              Hãy tạo bản sao mới bằng spread, <code>map</code> hoặc <code>filter</code>.
+            </p>
+            <pre><code>// Sai
+user.name = 'John';
+setUser(user);
+
+// Đúng
+setUser({
+  ...user,
+  name: 'John'
+});</code></pre>
+          </article>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="events" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Event handling</p>
+        <h2>Event là cầu nối giữa người dùng và state</h2>
+        <p>
+          Trong JSX, event prop viết dạng camelCase như <code>onClick</code>, <code>onChange</code>.
+          Giá trị của prop phải là function để React gọi sau, không phải kết quả của function.
+        </p>
+      </div>
+
+      <div class="comparison">
+        <article>
+          <h3>Truyền function: đúng</h3>
+          <pre><code>function handleClick() {
+  alert('Clicked');
+}
+
+&lt;button onClick={handleClick}&gt;
+  Save
+&lt;/button&gt;</code></pre>
+          <p>React ghi nhớ handler và chỉ gọi khi user click.</p>
+        </article>
+        <article>
+          <h3>Gọi function khi render: sai ý</h3>
+          <pre><code>&lt;button onClick={handleClick()}&gt;
+  Save
+&lt;/button&gt;
+
+&lt;button onClick={alert('Clicked')}&gt;
+  Save
+&lt;/button&gt;</code></pre>
+          <p>Dấu <code>()</code> làm code chạy ngay trong lúc render, trước khi user click.</p>
+        </article>
+      </div>
+
+      <div class="interactive-grid">
+        <article class="demo-panel event-lab" data-demo="eventLab">
+          <h3>Event playground</h3>
+          <div class="event-stage">
+            <button type="button" data-event-source="button">Click để tạo onClick</button>
+            <label>Nhập tên môn học
+              <input type="text" value="ReactJS" data-event-source="input">
+            </label>
+            <label class="check-control"><input type="checkbox" checked data-event-source="checkbox"> Bật thông
+              báo</label>
+          </div>
+          <div class="event-readout">
+            <p><strong>Event gần nhất:</strong> <span data-event-current>Chưa có event.</span></p>
+            <ol data-event-log></ol>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-event"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-event" hidden><code data-live-code></code></pre>
+        </article>
+
+        <article class="demo-panel event-props-lab">
+          <h3>Truyền event handler qua props</h3>
+          <div class="prop-flow">
+            <div class="node parent">OrderPage</div>
+            <div class="edge"></div>
+            <div class="node child">OrderCard</div>
+            <div class="edge"></div>
+            <div class="node dom">&lt;button&gt;</div>
+          </div>
+          <p>
+            Trong dự án thật, component con thường không tự quyết định nghiệp vụ.
+            Nó chỉ báo “người dùng vừa làm gì” thông qua props như
+            <code>onConfirm</code>, <code>onCancel</code>, <code>onViewDetail</code>.
+            Component cha mới là nơi gọi API, mở modal, cập nhật state hoặc điều hướng.
+          </p>
+          <div class="scenario-grid" aria-label="Các tình huống thực tế khi truyền handler qua props">
+            <article>
+              <strong>Đơn hàng</strong>
+              <span>Card gọi <code>onConfirm(order.id)</code>, page gọi API xác nhận.</span>
+            </article>
+            <article>
+              <strong>Danh sách user</strong>
+              <span>Row gọi <code>onSelect(user)</code>, page mở panel chi tiết.</span>
+            </article>
+            <article>
+              <strong>Giỏ hàng</strong>
+              <span>Item gọi <code>onQuantityChange(id, qty)</code>, page tính lại tổng tiền.</span>
+            </article>
+          </div>
+          <pre><code>function OrderPage() {
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  async function handleConfirm(orderId) {
+    await confirmOrder(orderId);
+    toast.success('Đã xác nhận đơn hàng');
+  }
+
+  function handleCancel(orderId) {
+    openConfirmModal({
+      message: 'Hủy đơn hàng này?',
+      onAccept: () =&gt; cancelOrder(orderId)
+    });
+  }
+
+  return orders.map(order =&gt; (
+    &lt;OrderCard
+      key={order.id}
+      order={order}
+      onViewDetail={setSelectedOrder}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+    /&gt;
+  ));
+}
+
+function OrderCard({ order, onViewDetail, onConfirm, onCancel }) {
+  return (
+    &lt;article&gt;
+      &lt;h3&gt;Đơn #{order.code}&lt;/h3&gt;
+      &lt;button onClick={() =&gt; onViewDetail(order)}&gt;Chi tiết&lt;/button&gt;
+      &lt;button onClick={() =&gt; onConfirm(order.id)}&gt;Xác nhận&lt;/button&gt;
+      &lt;button onClick={() =&gt; onCancel(order.id)}&gt;Hủy&lt;/button&gt;
+    &lt;/article&gt;
+  );
+}</code></pre>
+          <p>
+            Cách đọc nhanh: <strong>prop bắt đầu bằng <code>on...</code></strong> là sự kiện mà component con phát ra;
+            <strong>function bắt đầu bằng <code>handle...</code></strong> là cách component cha xử lý sự kiện đó.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="sharing" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Sharing State Between Components</p>
+        <h2>Khi nhiều component cùng phụ thuộc một lựa chọn, đưa state lên cha gần nhất</h2>
+        <p>
+          Ví dụ thực tế: trong trang checkout, phần chọn phương thức giao hàng,
+          phần dự kiến nhận hàng và phần tổng tiền đều cần biết cùng một lựa chọn.
+          Nếu mỗi component tự giữ state riêng, UI rất dễ lệch nhau. Cách React khuyên dùng
+          là để component cha gần nhất giữ <strong>source of truth</strong>.
+        </p>
+      </div>
+
+      <div class="two-column">
+        <div class="concept-panel">
+          <h3>3 bước lifting state up trong checkout</h3>
+          <ol class="steps-list">
+            <li>Tìm state đang bị lặp: <code>shippingId</code> xuất hiện ở nhiều component.</li>
+            <li>Đưa state lên <code>CheckoutPage</code>, cha chung của các phần đó.</li>
+            <li>Truyền <code>selectedShipping</code> xuống để hiển thị và <code>onSelectShipping</code> xuống để child
+              báo thay đổi.</li>
+          </ol>
+        </div>
+        <div class="code-panel">
+          <pre><code>function CheckoutPage() {
+  const [shippingId, setShippingId] = useState('standard');
+  const shipping = shippingMethods.find(m =&gt; m.id === shippingId);
+
+  return (
+    &lt;&gt;
+      &lt;ShippingOptions
+        selectedId={shippingId}
+        onSelect={setShippingId}
+      /&gt;
+      &lt;DeliveryPreview shipping={shipping} /&gt;
+      &lt;OrderSummary shippingFee={shipping.fee} /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+
+      <article class="demo-panel sharing-lab" data-demo="sharingLab">
+        <div class="lab-heading compact">
+          <p class="eyebrow">Sharing lab</p>
+          <h3>Checkout: chọn giao hàng một lần, nhiều component cùng cập nhật</h3>
+        </div>
+        <div class="sharing-controls">
+          <label class="field-control">Chế độ state
+            <select data-sharing-mode>
+              <option value="shared" selected>Lifted state: CheckoutPage giữ shippingId</option>
+              <option value="local">Local state: mỗi phần tự giữ lựa chọn</option>
+            </select>
+          </label>
+          <p data-sharing-source>Source of truth: <strong>CheckoutPage.shippingId = standard</strong></p>
+        </div>
+        <div class="checkout-sim" data-checkout-sim>
+          <section class="shipping-options-sim">
+            <h4>ShippingOptions</h4>
+            <p>Người dùng chọn phương thức giao hàng.</p>
+            <button class="is-selected" type="button" data-shipping-id="standard">Tiêu chuẩn · 25.000đ</button>
+            <button type="button" data-shipping-id="express">Hỏa tốc · 60.000đ</button>
+          </section>
+          <section class="delivery-preview-sim">
+            <h4>DeliveryPreview</h4>
+            <p>Ngày nhận dự kiến</p>
+            <strong data-delivery-date>Thứ 5, 25/06</strong>
+            <span data-delivery-note>Phù hợp đơn không gấp.</span>
+          </section>
+          <section class="order-summary-sim">
+            <h4>OrderSummary</h4>
+            <dl>
+              <div>
+                <dt>Tạm tính</dt>
+                <dd>420.000đ</dd>
+              </div>
+              <div>
+                <dt>Phí giao hàng</dt>
+                <dd data-shipping-fee>25.000đ</dd>
+              </div>
+              <div class="summary-total">
+                <dt>Tổng cộng</dt>
+                <dd data-order-total>445.000đ</dd>
+              </div>
+            </dl>
+          </section>
+        </div>
+        <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-sharing"
+          data-code-toggle>Show code</button>
+        <pre class="demo-code" id="code-sharing" hidden><code data-live-code></code></pre>
+      </article>
+    </section>
+
+    <section id="controlled" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Controlled components</p>
+        <h2>Input controlled là input bị state điều khiển</h2>
+        <p>
+          Một text input controlled nhận <code>value={state}</code> và cập nhật state trong
+          <code>onChange</code>. Checkbox/radio dùng <code>checked</code> và đọc
+          <code>e.target.checked</code>. Nếu có <code>value</code> mà không có
+          <code>onChange</code>, input sẽ gần như bị khóa.
+        </p>
+      </div>
+
+      <div class="interactive-grid single-row">
+        <article class="demo-panel controlled-lab" data-demo="controlledLab">
+          <div class="lab-heading compact">
+            <p class="eyebrow">Controlled lab</p>
+            <h3>Mỗi phím bấm đều cập nhật state và render preview</h3>
+          </div>
+          <div class="controlled-grid">
+            <form class="controlled-form" aria-label="Demo controlled form">
+              <label>Họ tên
+                <input type="text" data-control="fullName" value="Nguyen An">
+              </label>
+              <label>Email
+                <input type="email" data-control="email" value="an@example.com">
+              </label>
+              <label>Vai trò
+                <select data-control="role">
+                  <option>Frontend Developer</option>
+                  <option selected>React Learner</option>
+                  <option>Team Lead</option>
+                </select>
+              </label>
+              <label class="check-control"><input type="checkbox" data-control="newsletter" checked> Nhận tin học
+                React</label>
+              <div class="button-row">
+                <button type="button" data-controlled-action="sample">Điền mẫu</button>
+                <button class="ghost-button" type="button" data-controlled-action="reset">Xóa form</button>
+              </div>
+            </form>
+            <div class="profile-preview">
+              <span>Preview từ state</span>
+              <strong data-preview-name>Nguyen An</strong>
+              <em data-preview-role>React Learner</em>
+              <p data-preview-email>an@example.com</p>
+              <p data-preview-newsletter>Đã bật nhận tin.</p>
+            </div>
+            <pre class="json-preview"><code data-controlled-json>{}</code></pre>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-controlled"
+            data-code-toggle>Show code</button>
+          <pre class="demo-code" id="code-controlled" hidden><code data-live-code></code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="forms" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Forms</p>
+        <h2>Form gồm nhập liệu, validate và submit</h2>
+        <p>
+          Với React hiện đại, bạn có hai cách hay gặp: xử lý <code>onSubmit</code>
+          và đọc <code>new FormData(event.currentTarget)</code>, hoặc dùng React DOM
+          <code>&lt;form action={fn}&gt;</code> để function nhận trực tiếp <code>formData</code>.
+        </p>
+      </div>
+
+      <div class="comparison">
+        <article>
+          <h3>Controlled form</h3>
+          <p>Mọi thay đổi input đẩy vào state. Hợp khi cần validate live, preview live, enable/disable button.</p>
+          <pre><code>&lt;input
+  value={email}
+  onChange={e =&gt; setEmail(e.target.value)}
+/&gt;</code></pre>
+        </article>
+        <article>
+          <h3>Uncontrolled + FormData</h3>
+          <p>
+            DOM giữ giá trị input. Khi submit, <code>event.currentTarget</code>
+            chính là thẻ <code>&lt;form&gt;</code> đang được submit; <code>FormData</code>
+            sẽ đọc các field có <code>name</code> bên trong form đó.
+          </p>
+          <pre><code>function handleSubmit(event) {
+  event.preventDefault();
+
+  const formData = new FormData(event.currentTarget);
+  const data = {
+    student: formData.get('student'),
+    email: formData.get('email'),
+    topic: formData.get('topic')
+  };
+
+  registerStudent(data);
+}
+
+&lt;form onSubmit={handleSubmit}&gt;
+  &lt;input name="student" /&gt;
+  &lt;input name="email" type="email" /&gt;
+  &lt;select name="topic"&gt;...&lt;/select&gt;
+  &lt;button type="submit"&gt;Gửi&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </article>
+        <article>
+          <h3>React DOM action function</h3>
+          <p>
+            Với <code>&lt;form action={fn}&gt;</code>, React gọi function đó khi submit
+            và truyền trực tiếp <code>formData</code>. Trường hợp này không cần tự tạo
+            <code>new FormData(event.currentTarget)</code> trong handler.
+          </p>
+          <pre><code>function signup(formData) {
+  const data = {
+    student: formData.get('student'),
+    email: formData.get('email'),
+    topic: formData.get('topic')
+  };
+
+  registerStudent(data);
+}
+
+&lt;form action={signup}&gt;
+  &lt;input name="student" /&gt;
+  &lt;input name="email" type="email" /&gt;
+  &lt;select name="topic"&gt;...&lt;/select&gt;
+  &lt;button type="submit"&gt;Gửi&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </article>
+      </div>
+
+      <article class="demo-panel form-lab" data-demo="formLab">
+        <div class="lab-heading compact">
+          <p class="eyebrow">Form lab</p>
+          <h3>Submit form và đọc FormData</h3>
+          <p>
+            Khi dùng <code>onSubmit</code>, gọi <code>event.preventDefault()</code>
+            để chặn trình duyệt submit theo cách mặc định. Nếu không chặn, browser sẽ
+            reload hoặc chuyển trang, làm mất state hiện tại và React không kịp xử lý dữ liệu trong hàm submit.
+          </p>
+        </div>
+        <form class="signup-form" data-training-form>
+          <label>Tên học viên
+            <input name="student" required value="Minh Tri">
+          </label>
+          <label>Email
+            <input name="email" type="email" required value="tri@example.com">
+          </label>
+          <label>Chủ đề muốn hỏi
+            <select name="topic">
+              <option>useState</option>
+              <option selected>Controlled components</option>
+              <option>Form action</option>
+            </select>
+          </label>
+          <label>Ghi chú
+            <textarea name="note" rows="4">Muốn hiểu rõ vì sao input controlled cần onChange.</textarea>
+          </label>
+          <div class="button-row">
+            <button type="submit" value="submit">Gửi đăng ký</button>
+            <button type="submit" value="draft" formnovalidate>Lưu nháp</button>
+          </div>
+        </form>
+        <div class="submit-result">
+          <span data-form-status>Sẵn sàng submit.</span>
+          <pre><code data-form-output>FormData sẽ hiện ở đây sau khi submit.</code></pre>
+        </div>
+        <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-form" data-code-toggle>Show
+          code</button>
+        <pre class="demo-code" id="code-form" hidden><code data-live-code></code></pre>
+      </article>
+    </section>
+
+    <section id="quiz" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Quiz</p>
+        <h2>Ôn nhanh trước khi thực hành React</h2>
+        <p>Chọn đáp án cho từng câu. Điểm và giải thích sẽ cập nhật ngay sau mỗi lần chọn.</p>
+      </div>
+      <div class="quiz-shell" data-quiz>
+        <div class="quiz-score">
+          <strong data-quiz-score>0/0</strong>
+          <span data-quiz-message>Bắt đầu bằng câu hỏi đầu tiên.</span>
+        </div>
+        <div class="quiz-list" data-quiz-list></div>
+      </div>
+    </section>
+
+    <section id="tips" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Tips</p>
+        <h2>Checklist khi viết state, events và forms</h2>
+      </div>
+      <div class="tips-grid">
+        <article>
+          <h3>State</h3>
+          <p>Dùng updater khi next state phụ thuộc previous state, đặc biệt nếu gọi set nhiều lần trong một event.</p>
+        </article>
+        <article>
+          <h3>Object/array</h3>
+          <p>Không sửa trực tiếp object/array trong state. Tạo bản mới bằng spread, map, filter hoặc reducer.</p>
+        </article>
+        <article>
+          <h3>Events</h3>
+          <p>Đặt handler là function: <code>onClick={handleClick}</code> hoặc
+            <code>onClick={() =&gt; doThing(id)}</code>.</p>
+        </article>
+        <article>
+          <h3>Props handler</h3>
+          <p>Với component tự tạo, đặt prop theo ý nghĩa: <code>onSubmitOrder</code>, <code>onSelectUser</code>.</p>
+        </article>
+        <article>
+          <h3>Sharing</h3>
+          <p>Khi hai child cần đồng bộ, tìm cha chung gần nhất và để cha giữ source of truth.</p>
+        </article>
+        <article>
+          <h3>Controlled input</h3>
+          <p>Text input cần <code>value</code> + <code>onChange</code>; checkbox cần <code>checked</code> +
+            <code>onChange</code>.</p>
+        </article>
+        <article>
+          <h3>Submit</h3>
+          <p>Nếu dùng <code>onSubmit</code>, gọi <code>event.preventDefault()</code> để tránh browser refresh trang.</p>
+        </article>
+        <article>
+          <h3>Accessibility</h3>
+          <p>Mỗi input nên có label rõ ràng. Button submit nên có nội dung cụ thể hơn "OK".</p>
+        </article>
+      </div>
+
+      <div class="sources">
+        <h3>Nguồn tham khảo chính</h3>
+        <ul>
+          <li><a href="https://react.dev/reference/react/useState">React docs: useState</a></li>
+          <li><a href="https://react.dev/learn/responding-to-events">React docs: Responding to Events</a></li>
+          <li><a href="https://react.dev/learn/sharing-state-between-components">React docs: Sharing State Between
+              Components</a></li>
+          <li><a href="https://react.dev/reference/react-dom/components/input">React docs: &lt;input&gt;</a></li>
+          <li><a href="https://react.dev/reference/react-dom/components/form">React docs: &lt;form&gt;</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

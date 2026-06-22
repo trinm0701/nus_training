@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="img" aria-labelledby="title desc">
+  <title id="title">ReactJS state and form learning map</title>
+  <desc id="desc">Sơ đồ lộ trình học ReactJS gồm useState, event handling, lifting state, controlled components và forms.</desc>
+  <defs>
+    <filter id="soft-shadow" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="5.5" orient="auto">
+      <path d="M0 0 L9 5.5 L0 11 Z" fill="#087ea4"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="712" height="512" rx="30" fill="#f8fbff" stroke="#b6d7ea" stroke-width="1.5"/>
+  <path d="M86 475 C190 520 338 512 450 472 C560 432 632 438 688 482" fill="none" stroke="#bae6fd" stroke-width="16" stroke-linecap="round" opacity="0.45"/>
+  <path d="M72 148 C154 78 248 72 342 116 C448 166 548 158 662 88" fill="none" stroke="#ccfbf1" stroke-width="14" stroke-linecap="round" opacity="0.7"/>
+
+  <g>
+    <rect x="70" y="58" width="620" height="132" rx="22" fill="#087ea4" filter="url(#soft-shadow)"/>
+    <rect x="98" y="90" width="68" height="68" rx="18" fill="#ffffff" opacity="0.16"/>
+    <text x="132" y="137" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900" fill="#ffffff">R</text>
+    <text x="198" y="113" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="900" fill="#ffffff">React State Flow</text>
+    <text x="198" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#e0f7ff">Event -> setState -> render lại</text>
+    <rect x="536" y="94" width="104" height="56" rx="14" fill="#ffffff" opacity="0.18"/>
+    <text x="588" y="118" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="900" fill="#ffffff">1 chiều</text>
+    <text x="588" y="138" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800" fill="#e0f7ff">data flow</text>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g filter="url(#soft-shadow)">
+      <rect x="38" y="238" width="126" height="160" rx="18" fill="#ffffff" stroke="#b6d7ea"/>
+      <circle cx="101" cy="271" r="22" fill="#087ea4"/>
+      <text x="101" y="278" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">1</text>
+      <text x="101" y="314" text-anchor="middle" font-size="19" font-weight="900" fill="#14213d">useState</text>
+      <text x="101" y="343" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="101" dy="0">state</tspan>
+        <tspan x="101" dy="20">setState</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="178" y="238" width="126" height="160" rx="18" fill="#ffffff" stroke="#fde68a"/>
+      <circle cx="241" cy="271" r="22" fill="#f59e0b"/>
+      <text x="241" y="278" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">2</text>
+      <text x="241" y="314" text-anchor="middle" font-size="19" font-weight="900" fill="#14213d">Events</text>
+      <text x="241" y="343" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="241" dy="0">onClick</tspan>
+        <tspan x="241" dy="20">onChange</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="318" y="238" width="126" height="160" rx="18" fill="#ffffff" stroke="#fecdd3"/>
+      <circle cx="381" cy="271" r="22" fill="#e11d48"/>
+      <text x="381" y="278" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">3</text>
+      <text x="381" y="314" text-anchor="middle" font-size="19" font-weight="900" fill="#14213d">Lift state</text>
+      <text x="381" y="343" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="381" dy="0">cha giữ</tspan>
+        <tspan x="381" dy="20">source</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="458" y="238" width="126" height="160" rx="18" fill="#ffffff" stroke="#bbf7d0"/>
+      <circle cx="521" cy="271" r="22" fill="#16a34a"/>
+      <text x="521" y="278" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">4</text>
+      <text x="521" y="314" text-anchor="middle" font-size="18" font-weight="900" fill="#14213d">Controlled</text>
+      <text x="521" y="343" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="521" dy="0">value</tspan>
+        <tspan x="521" dy="20">onChange</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="598" y="238" width="126" height="160" rx="18" fill="#ffffff" stroke="#bfdbfe"/>
+      <circle cx="661" cy="271" r="22" fill="#2563eb"/>
+      <text x="661" y="278" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">5</text>
+      <text x="661" y="314" text-anchor="middle" font-size="19" font-weight="900" fill="#14213d">Forms</text>
+      <text x="661" y="343" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="661" dy="0">FormData</tspan>
+        <tspan x="661" dy="20">action</tspan>
+      </text>
+    </g>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif" font-size="16" font-weight="900" fill="#087ea4" opacity="0.72">
+    <text x="171" y="323" text-anchor="middle">→</text>
+    <text x="311" y="323" text-anchor="middle">→</text>
+    <text x="451" y="323" text-anchor="middle">→</text>
+    <text x="591" y="323" text-anchor="middle">→</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="88" y="426" width="584" height="72" rx="18" fill="#ffffff" stroke="#d8e2ef"/>
+    <circle cx="126" cy="462" r="16" fill="#e0f2fe"/>
+    <path d="M119 462 h14 M128 455 l7 7-7 7" fill="none" stroke="#087ea4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="158" y="455" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="900" fill="#14213d">Quy tắc nhớ nhanh</text>
+    <text x="158" y="478" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#53657d">State đi xuống bằng props, event đi ngược lên qua handler.</text>
+  </g>
+</svg>
