@@ -135,6 +135,59 @@ export default function Counter() {
         </div>
       </div>
 
+      <div class="demo-panel use-state-core">
+        <div class="lab-heading compact">
+          <p class="eyebrow">Core idea</p>
+          <h3>React có thể “nhớ” state giữa các lần gọi component như thế nào?</h3>
+          <p>
+            Đây là bản mô phỏng đơn giản để hiểu tư duy của Hook, không phải source code thật của React.
+            Ý chính: React giữ một danh sách state theo thứ tự gọi Hook; mỗi lần render lại, chỉ số Hook quay về 0.
+          </p>
+        </div>
+        <button class="code-toggle" type="button" aria-expanded="false" aria-controls="code-use-state-core"
+          data-code-toggle>Show core code</button>
+        <pre class="demo-code" id="code-use-state-core" hidden><code>// Mô phỏng cực giản ý tưởng phía sau useState
+let hookStates = [];
+let hookIndex = 0;
+
+function useState(initialState) {
+  const currentIndex = hookIndex;
+
+  if (hookStates[currentIndex] === undefined) {
+    hookStates[currentIndex] =
+      typeof initialState === 'function'
+        ? initialState()
+        : initialState;
+  }
+
+  function setState(nextState) {
+    const currentState = hookStates[currentIndex];
+
+    hookStates[currentIndex] =
+      typeof nextState === 'function'
+        ? nextState(currentState)
+        : nextState;
+
+    render();
+  }
+
+  hookIndex += 1;
+  return [hookStates[currentIndex], setState];
+}
+
+function render() {
+  hookIndex = 0;
+  App();
+}
+
+function App() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('React');
+
+  console.log({ count, name });
+}</code></pre>
+      </div>
+
       <div class="interactive-grid single-row">
         <article class="demo-panel state-lab" data-demo="stateCounter">
           <div class="lab-heading compact">
@@ -563,14 +616,6 @@ function OrderCard({ order, onViewDetail, onConfirm, onCancel }) {
       </div>
 
       <div class="comparison">
-        <article>
-          <h3>Controlled form</h3>
-          <p>Mọi thay đổi input đẩy vào state. Hợp khi cần validate live, preview live, enable/disable button.</p>
-          <pre><code>&lt;input
-  value={email}
-  onChange={e =&gt; setEmail(e.target.value)}
-/&gt;</code></pre>
-        </article>
         <article>
           <h3>Uncontrolled + FormData</h3>
           <p>

@@ -559,6 +559,14 @@ button:hover,
   color: var(--muted);
 }
 
+.use-state-core {
+  margin-top: 24px;
+}
+
+.use-state-core .lab-heading {
+  margin-bottom: 16px;
+}
+
 .state-principles {
   margin-top: 24px;
   padding: 24px;
