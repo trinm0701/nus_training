@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ES6 + NPM/YARN/PNPM và NVM toolbox</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./assets/main.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#intro" aria-label="Về đầu bài giảng">
+      <span class="brand-mark">ES6</span>
+      <span>ES6 + Toolbox</span>
+    </a>
+    <nav class="topnav" aria-label="Điều hướng bài giảng">
+      <a href="#overview">Overview</a>
+      <a href="#syntax">Syntax</a>
+      <a href="#oop-modules">OOP &amp; Modules</a>
+      <a href="#modern">Modern</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#toolbox">Toolbox</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#tips">Tips</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="intro" class="hero section">
+      <div class="hero-copy">
+        <p class="eyebrow">Buổi training JavaScript</p>
+        <h1>ES6 và toolbox cho dự án hiện đại</h1>
+        <p class="lead">
+          Bài giảng này gom những phần trainee khá cần dùng hằng ngày:
+          cú pháp ES6, module, pattern async, Fetch API, package manager và cách cố định Node version bằng NVM.
+        </p>
+        <div class="hero-actions" aria-label="Lối vào nhanh">
+          <a class="primary-action" href="#overview">Bắt đầu học</a>
+          <a class="secondary-action" href="#quiz">Làm quiz</a>
+        </div>
+      </div>
+      <figure class="hero-visual">
+        <img src="./assets/es6-toolbox-map.svg" alt="Sơ đồ học ES6, modern JavaScript, package manager và NVM">
+      </figure>
+    </section>
+
+    <section id="learning-path" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Lộ trình</p>
+        <h2>Đi từ cú pháp đến toolbox dùng trong project</h2>
+        <p>
+          Bài này không đào sâu lịch sử JavaScript. Mục tiêu là đọc được code hiện đại,
+          viết module sạch, gọi API an toàn và setup môi trường Node.js nhất quán.
+        </p>
+      </div>
+      <div class="path-grid">
+        <article>
+          <span>1</span>
+          <h3>Overview</h3>
+          <p>ES6/ES2015, block scope, template literal và cách đọc code hiện đại.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Syntax trọng tâm</h3>
+          <p>Arrow function, classes, spread syntax và những điểm dễ dùng sai.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>OOP &amp; Modules</h3>
+          <p>Class dựa trên prototype, named/default export, ESM trong browser và Node.js.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <h3>Modern features</h3>
+          <p>Array/object methods, optional chaining, nullish coalescing, logical assignment, top-level await.</p>
+        </article>
+        <article>
+          <span>5</span>
+          <h3>Practical patterns</h3>
+          <p>Module pattern, async/await error handling, Fetch API wrapper, ESM vs CommonJS.</p>
+        </article>
+        <article>
+          <span>6</span>
+          <h3>Toolbox</h3>
+          <p>NPM/YARN/PNPM, <code>package.json</code>, nơi package được cài và NVM với <code>.nvmrc</code>.</p>
+        </article>
+        <article>
+          <span>7</span>
+          <h3>Quiz</h3>
+          <p>10 câu trắc nghiệm có chấm điểm và giải thích đáp án ngay sau khi chọn.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">ES6 Overview</p>
+        <h2>ES6 là bộ nền giúp JavaScript dễ viết ở quy mô project</h2>
+        <p>
+          ES6, hay ES2015, đưa vào nhiều tính năng mà các framework hiện đại dùng liên tục:
+          <code>let</code>/<code>const</code>, arrow function, class, module, destructuring, default parameter,
+          template literal, Promise và spread syntax.
+        </p>
+      </div>
+
+      <div class="two-column">
+        <div class="concept-panel">
+          <h3>Đọc code ES6 theo 4 câu hỏi</h3>
+          <ul class="plain-list">
+            <li><strong>Dữ liệu đi đâu?</strong> destructuring, spread, rest parameter.</li>
+            <li><strong>Function giữ ngữ cảnh nào?</strong> arrow function dùng lexical <code>this</code>.</li>
+            <li><strong>Module xuất/nhập gì?</strong> named export, default export, side-effect import.</li>
+            <li><strong>Giá trị thiếu được xử lý sao?</strong> optional chaining và nullish coalescing.</li>
+          </ul>
+        </div>
+        <div class="code-panel">
+          <pre><code>const user = {
+  id: 7,
+  profile: { name: "An", role: "admin" }
+};
+
+const label = `${user.profile.name} - ${user.profile.role}`;
+const role = user.profile?.role ?? "guest";
+
+export function canManage(account) {
+  return account.permissions?.includes("manage") ?? false;
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="comparison">
+        <article>
+          <h3>Điểm nên dùng mặc định</h3>
+          <p>
+            Ưu tiên <code>const</code>, chỉ dùng <code>let</code> khi cần gán lại. Viết function ngắn bằng arrow,
+            tách module theo trách nhiệm, tránh nhồi mọi thứ vào một file.
+          </p>
+        </article>
+        <article>
+          <h3>Điểm không nên thần thánh hóa</h3>
+          <p>
+            ES6 không tự làm code sạch. Code vẫn cần tên biến rõ, boundary rõ,
+            xử lý lỗi đầy đủ và dependency được khóa bằng lockfile.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="syntax" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Arrow Function, Classes, Spread</p>
+        <h2>Ba cú pháp xuất hiện dày đặc trong codebase hiện đại</h2>
+      </div>
+
+      <div class="syntax-grid">
+        <article class="concept-panel">
+          <h3>Arrow function</h3>
+          <div class="syntax-diagram arrow-diagram" aria-label="Cú pháp arrow function">
+            <span class="token param-token">(items)</span>
+            <span class="token arrow-token">=&gt;</span>
+            <span class="token body-token">items.map(item =&gt; item.id)</span>
+          </div>
+          <ul class="plain-list">
+            <li>Gọn cho callback: <code>map</code>, <code>filter</code>, <code>reduce</code>, event handler.</li>
+            <li>Không có <code>this</code> riêng; <code>this</code> lấy từ scope bên ngoài.</li>
+            <li>Không dùng làm constructor, không phù hợp khi method cần dynamic <code>this</code>.</li>
+          </ul>
+        </article>
+
+        <article class="code-panel">
+          <pre><code>const activeNames = users
+  .filter((user) =&gt; user.active)
+  .map((user) =&gt; user.name);
+
+const team = {
+  name: "Frontend",
+  members: ["An", "Binh"],
+  printLater() {
+    setTimeout(() =&gt; {
+      console.log(this.name);
+    }, 100);
+  }
+};</code></pre>
+        </article>
+      </div>
+
+      <div class="comparison">
+        <article>
+          <h3>Class</h3>
+          <p>
+            <code>class</code> là cú pháp rõ ràng hơn để tạo object có prototype chung.
+            Dùng khi domain thật sự có entity, behavior và inheritance hợp lý.
+          </p>
+          <pre><code>class HttpError extends Error {
+  constructor(status, message) {
+    super(message);
+    this.status = status;
+  }
+}</code></pre>
+        </article>
+        <article>
+          <h3>Spread syntax</h3>
+          <p>
+            <code>...</code> mở array/object hoặc truyền danh sách argument.
+            Rất hữu ích khi tạo bản copy mới thay vì sửa trực tiếp dữ liệu cũ.
+          </p>
+          <pre><code>const nextUser = {
+  ...user,
+  profile: {
+    ...user.profile,
+    role: "admin"
+  }
+};</code></pre>
+        </article>
+      </div>
+
+      <article class="demo-panel" data-demo="spreadLab">
+        <div class="lab-heading compact">
+          <p class="eyebrow">Spread lab</p>
+          <h3>Chọn kiểu spread và cho trainee dự đoán kết quả</h3>
+          <p>
+            Spread chỉ copy một lớp. Nếu object lồng nhau, cần spread từng lớp hoặc dùng cách clone phù hợp với dữ liệu.
+          </p>
+        </div>
+        <div class="segmented-control" aria-label="Chọn ví dụ spread">
+          <button type="button" data-spread-case="array" class="is-active">Array</button>
+          <button type="button" data-spread-case="object">Object</button>
+          <button type="button" data-spread-case="args">Arguments</button>
+          <button type="button" data-spread-case="nested">Nested</button>
+        </div>
+        <div class="demo-result">
+          <pre><code data-spread-code></code></pre>
+          <div class="result-card spread-result-card" data-spread-result-card>
+            <div class="result-card-head">
+              <span>Kết quả</span>
+              <button type="button" class="secondary-action result-toggle" data-spread-toggle>Hiện kết quả</button>
+            </div>
+            <div class="spread-answer" data-spread-answer hidden>
+              <strong data-spread-result></strong>
+              <p data-spread-note></p>
+            </div>
+            <p class="answer-placeholder" data-spread-placeholder>???</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="oop-modules" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">OOP in ES6 &amp; Import/Export</p>
+        <h2>Class là mặt cú pháp, module là boundary của project</h2>
+        <p>
+          JavaScript vẫn là ngôn ngữ prototype-based. <code>class</code>, <code>extends</code> và <code>super</code>
+          giúp mô tả inheritance dễ đọc hơn, nhưng object vẫn chia sẻ behavior thông qua prototype chain.
+        </p>
+      </div>
+
+      <div class="oop-flow">
+        <article>
+          <span>class</span>
+          <h3>Khuôn behavior</h3>
+          <p>Đặt constructor và method chung cho nhiều instance.</p>
+        </article>
+        <i></i>
+        <article>
+          <span>extends</span>
+          <h3>Kế thừa có chọn lọc</h3>
+          <p>Dùng khi subtype thật sự là một biến thể của base type.</p>
+        </article>
+        <i></i>
+        <article>
+          <span>module</span>
+          <h3>Đóng gói API</h3>
+          <p>Chỉ export phần cần dùng, giấu implementation detail.</p>
+        </article>
+      </div>
+
+      <div class="two-column">
+        <div class="concept-panel">
+          <h3>Ví dụ OOP vừa đủ</h3>
+          <p>
+            Tránh tạo class chỉ để chứa function tĩnh. Với logic thuần, module function thường đơn giản hơn.
+            Với entity có state và behavior đi cùng nhau, class giúp code dễ đọc.
+          </p>
+          <pre><code>class Cart {
+  #items = [];
+
+  add(product, quantity = 1) {
+    this.#items.push({ product, quantity });
+  }
+
+  get total() {
+    return this.#items.reduce(
+      (sum, item) =&gt; sum + item.product.price * item.quantity,
+      0
+    );
+  }
+}</code></pre>
+        </div>
+        <div class="concept-panel">
+          <h3>Import/Export module trong ES6</h3>
+          <p>
+            ESM giống như mỗi file công khai một vài “cổng ra” bằng <code>export</code>,
+            rồi file khác nối vào đúng cổng đó bằng <code>import</code>. Vì cú pháp
+            <code>import</code> thường nằm cố định ở đầu file, browser hoặc bundler có thể đọc trước
+            project cần những file nào trước khi chạy code.
+          </p>
+          <p>
+            <strong>Live binding</strong> nghĩa là import không copy giá trị một lần rồi thôi.
+            Nó giống một đường link tới binding gốc: khi module gốc đổi giá trị export,
+            nơi import đọc lại sẽ thấy giá trị mới.
+          </p>
+          <div class="module-compare">
+            <article>
+              <h4>Trước ES6</h4>
+              <p>
+                Code browser thường dùng biến global hoặc IIFE để tự tạo scope.
+                Khi project lớn, thứ tự nhúng file bằng <code>&lt;script&gt;</code> rất dễ sai,
+                dependency không hiện rõ và dễ đè tên biến trên <code>window</code>.
+              </p>
+              <pre><code>&lt;script src="./money.js"&gt;&lt;/script&gt;
+&lt;script src="./cart.js"&gt;&lt;/script&gt;
+
+// cart.js phụ thuộc vào biến global Money
+const total = Money.format(cart.total);</code></pre>
+            </article>
+            <article>
+              <h4>Với ES6 module</h4>
+              <p>
+                Dependency được khai báo ngay trong file bằng <code>import</code>.
+                Bundler có thể phân tích graph module, chỉ đóng gói phần được dùng
+                và browser hỗ trợ module bằng <code>type="module"</code>.
+              </p>
+              <pre><code>import { formatMoney } from "./money.js";
+
+const total = formatMoney(cart.total);</code></pre>
+            </article>
+          </div>
+          <pre><code>// settings.js
+export let theme = "light";
+
+export function switchTheme(nextTheme) {
+  theme = nextTheme;
+}
+
+// screen.js
+import { theme, switchTheme } from "./settings.js";
+
+console.log(theme); // "light"
+switchTheme("dark");
+console.log(theme); // "dark" vì theme là live binding</code></pre>
+        </div>
+      </div>
+
+      <div class="module-board">
+        <article>
+          <h3>Named export</h3>
+          <p>Dùng cho nhiều API rõ tên trong cùng module.</p>
+          <code>import { sum, avg } from "./stats.js";</code>
+        </article>
+        <article>
+          <h3>Default export</h3>
+          <p>Dùng khi module có một giá trị chính.</p>
+          <code>import createStore from "./store.js";</code>
+        </article>
+        <article>
+          <h3>Side-effect import</h3>
+          <p>Dùng khi module chỉ cần chạy setup.</p>
+          <code>import "./setup-analytics.js";</code>
+        </article>
+        <article class="wide-module-card">
+          <h3>Dynamic import</h3>
+          <p>
+            Dùng khi chỉ muốn tải module lúc thật sự cần, ví dụ user mở trang Admin
+            thì mới tải code của Admin. <code>import()</code> luôn trả về Promise.
+          </p>
+          <pre><code>// Có await: chờ module tải xong rồi dùng ngay
+async function openAdminPage() {
+  const adminModule = await import("./admin-page.js");
+  adminModule.renderAdminPage();
+}
+
+// Không await: nhận Promise, xử lý bằng .then()
+function preloadAdminPage() {
+  import("./admin-page.js").then((adminModule) =&gt; {
+    adminModule.renderAdminPage();
+  });
+}</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="modern" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Modern JavaScript features</p>
+        <h2>Những API nhỏ nhưng giảm rất nhiều code phòng thủ</h2>
+        <p>
+          Đây là phần nên luyện bằng ví dụ. Chọn từng feature để xem input, output và tình huống nên dùng.
+        </p>
+      </div>
+
+      <article class="demo-panel feature-lab" data-demo="featureLab">
+        <div class="feature-menu" aria-label="Chọn modern JavaScript feature">
+          <button type="button" class="is-active" data-feature="includes">includes</button>
+          <button type="button" data-feature="flat">flat</button>
+          <button type="button" data-feature="flatMap">flatMap</button>
+          <button type="button" data-feature="entries">Object.entries</button>
+          <button type="button" data-feature="values">Object.values</button>
+          <button type="button" data-feature="fromEntries">Object.fromEntries</button>
+          <button type="button" data-feature="optional">?.</button>
+          <button type="button" data-feature="nullish">|| ?? &amp;&amp;</button>
+          <button type="button" data-feature="logical">||= ??= &amp;&amp;=</button>
+          <button type="button" data-feature="tla">Top-level await</button>
+        </div>
+        <div class="feature-stage">
+          <div>
+            <p class="eyebrow">Code</p>
+            <pre><code data-feature-code></code></pre>
+          </div>
+          <div class="feature-output">
+            <div class="result-card-head">
+              <p class="eyebrow">Kết quả</p>
+              <button type="button" class="secondary-action result-toggle" data-feature-toggle>Hiện kết quả</button>
+            </div>
+            <div class="feature-answer" data-feature-answer hidden>
+              <strong data-feature-result></strong>
+              <p data-feature-note></p>
+            </div>
+            <p class="answer-placeholder" data-feature-placeholder>???</p>
+          </div>
+        </div>
+      </article>
+
+      <div class="cheat-grid">
+        <article>
+          <h3>Array methods</h3>
+          <p><code>includes</code> kiểm tra tồn tại, <code>flat</code> làm phẳng array, <code>flatMap</code> map rồi
+            flat một cấp.</p>
+        </article>
+        <article>
+          <h3>Object methods</h3>
+          <p><code>Object.entries</code> đổi object thành cặp key/value, <code>Object.values</code> lấy value,
+            <code>Object.fromEntries</code> dựng object từ entries.</p>
+        </article>
+        <article>
+          <h3>Optional chaining</h3>
+          <p><code>user.profile?.address?.city</code> dừng an toàn khi phần bên trái là <code>null</code> hoặc
+            <code>undefined</code>.</p>
+        </article>
+        <article>
+          <h3>Nullish coalescing</h3>
+          <p><code>value ?? fallback</code> chỉ dùng fallback khi value là <code>null</code> hoặc
+            <code>undefined</code>, không nuốt <code>0</code>, <code>false</code>, <code>""</code>.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="patterns" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Practical Patterns</p>
+        <h2>Pattern nên dùng khi đưa ES6 vào code thật</h2>
+      </div>
+
+      <div class="pattern-grid">
+        <article>
+          <h3>Module pattern hiện đại</h3>
+          <p>
+            Module tốt nên giống một “hộp công cụ nhỏ”: tên file nói rõ trách nhiệm,
+            chỉ export những hàm bên ngoài thật sự cần, còn helper nội bộ giữ private trong file.
+            Cách này giúp file khác không phụ thuộc vào chi tiết triển khai.
+          </p>
+          <pre><code>// money.js - module chuyên xử lý tiền tệ
+const currency = "VND";
+
+function normalizeAmount(value) {
+  return Number(value || 0);
+}
+
+export function formatMoney(value) {
+  return normalizeAmount(value).toLocaleString("vi-VN") + "đ";
+}
+
+export function sumPrices(items) {
+  return items.reduce((total, item) =&gt; total + normalizeAmount(item.price), 0);
+}
+
+// checkout.js
+import { formatMoney, sumPrices } from "./money.js";
+
+const total = sumPrices(cart.items);
+console.log(formatMoney(total));</code></pre>
+          <ul class="plain-list pattern-notes">
+            <li><strong>Nên export:</strong> API ổn định như <code>formatMoney</code>, <code>sumPrices</code>.</li>
+            <li><strong>Không nên export:</strong> helper nội bộ như <code>normalizeAmount</code> nếu bên ngoài không
+              cần biết.</li>
+            <li><strong>Lợi ích:</strong> đổi logic bên trong module mà ít làm vỡ code import bên ngoài.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Async/await cải tiến gì?</h3>
+          <p>
+            Trước đây, code bất đồng bộ thường dùng callback hoặc chuỗi <code>.then().catch()</code>.
+            <code>async/await</code> không làm Promise biến mất; nó chỉ giúp cách viết nhìn giống code tuần tự,
+            dễ đọc hơn khi có nhiều bước phụ thuộc nhau.
+          </p>
+          <pre><code>// Cách then/catch: ổn, nhưng dễ dài khi nhiều bước nối tiếp
+getUser(userId)
+  .then((user) =&gt; getOrders(user.id))
+  .then((orders) =&gt; renderOrders(orders))
+  .catch((error) =&gt; showError(error));
+
+// Async/await: đọc từ trên xuống dưới
+async function loadOrders(userId) {
+  try {
+    const user = await getUser(userId);
+    const orders = await getOrders(user.id);
+    renderOrders(orders);
+  } catch (error) {
+    showError(error);
+  }
+}</code></pre>
+        </article>
+
+        <article>
+          <h3>Async/await error handling</h3>
+          <p>
+            Với <code>await</code>, lỗi Promise reject sẽ đi vào <code>catch</code> giống lỗi đồng bộ.
+            Nhưng vẫn cần xác định boundary: function nào chỉ throw tiếp, function nào log,
+            function nào hiển thị message cho user.
+          </p>
+          <pre><code>async function loadProfile(userId) {
+  try {
+    const profile = await getUser(userId);
+    renderProfile(profile);
+  } catch (error) {
+    reportError(error);
+    showToast("Không tải được hồ sơ.");
+  } finally {
+    hideLoading();
+  }
+}</code></pre>
+          <div class="decision-grid">
+            <div>
+              <h4>Nên dùng async/await khi</h4>
+              <ul class="plain-list">
+                <li>Có nhiều bước cần chạy tuần tự.</li>
+                <li>Cần <code>try/catch/finally</code> rõ ràng.</li>
+                <li>Code nghiệp vụ cần đọc như một luồng xử lý.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Không nhất thiết dùng khi</h4>
+              <ul class="plain-list">
+                <li>Chỉ transform Promise một dòng đơn giản.</li>
+                <li>Cần chạy song song, nên dùng <code>Promise.all</code>.</li>
+                <li>Đang setup pipeline stream/event liên tục.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article>
+          <h3>Fetch API wrapper</h3>
+          <p>
+            <code>fetch</code> chỉ reject khi lỗi network hoặc request bị chặn. Với HTTP 404/500,
+            cần kiểm tra <code>response.ok</code> rồi tự throw lỗi phù hợp.
+          </p>
+          <pre><code>export async function requestJson(url, options = {}) {
+  const response = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
+    ...options
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  return response.json();
+}</code></pre>
+        </article>
+
+        <article>
+          <h3>ESM vs CommonJS</h3>
+          <p>
+            Cả hai đều dùng để chia code thành module, nhưng khác ở thời điểm load,
+            cú pháp và mức độ tối ưu cho tooling hiện đại.
+          </p>
+          <div class="compare-table" role="table" aria-label="So sánh ESM và CommonJS">
+            <div role="row">
+              <strong role="columnheader">Tiêu chí</strong>
+              <strong role="columnheader">ESM</strong>
+              <strong role="columnheader">CommonJS</strong>
+            </div>
+            <div role="row">
+              <span>Cú pháp</span>
+              <span><code>import</code> / <code>export</code></span>
+              <span><code>require</code> / <code>module.exports</code></span>
+            </div>
+            <div role="row">
+              <span>Thời điểm phân tích</span>
+              <span>Phân tích tĩnh trước khi chạy, import thường ở top-level.</span>
+              <span>Load lúc runtime, <code>require()</code> có thể nằm trong <code>if</code> hoặc function.</span>
+            </div>
+            <div role="row">
+              <span>Gom code khi build</span>
+              <span>Dễ bỏ phần code không dùng khi build vì <code>import</code>/<code>export</code> rõ từ đầu.</span>
+              <span>Khó bỏ code thừa hơn vì <code>require()</code> có thể được gọi linh hoạt khi chạy.</span>
+            </div>
+            <div role="row">
+              <span>Môi trường</span>
+              <span>Chuẩn hiện đại cho browser, Node.js mới và frontend bundler.</span>
+              <span>Phổ biến trong Node.js cũ và nhiều package backend lâu đời.</span>
+            </div>
+            <div role="row">
+              <span>Load động</span>
+              <span>Dùng <code>import("./file.js")</code>, trả về Promise.</span>
+              <span><code>require("./file.js")</code> chạy đồng bộ trong CommonJS.</span>
+            </div>
+            <div role="row">
+              <span>Khi nào chọn?</span>
+              <span>Project mới, frontend, package muốn tối ưu bundle.</span>
+              <span>Codebase Node.js cũ hoặc package/tooling chỉ hỗ trợ CommonJS.</span>
+            </div>
+          </div>
+          <p class="pattern-summary">
+            <strong>Bundler</strong> là công cụ gom nhiều file thành bundle để chạy trên browser, ví dụ Vite, Webpack,
+            Rollup.
+            <strong>Tree shaking</strong> là bước loại bỏ phần export không được dùng để bundle nhẹ hơn.
+          </p>
+          <p class="pattern-summary">
+            Cách nhớ nhanh: code mới nên ưu tiên ESM; CommonJS vẫn cần hiểu vì còn xuất hiện nhiều
+            trong Node.js package và project cũ.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="toolbox" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">NPM, YARN, PNPM / NVM toolbox</p>
+        <h2>Toolbox giúp project chạy giống nhau trên mọi máy</h2>
+        <p>
+          Package manager quản dependency của project. NVM quản Node.js version.
+          Hai phần này nên được cấu hình cùng nhau để giảm lỗi “máy em chạy, máy anh không chạy”.
+        </p>
+      </div>
+
+      <div class="toolbox-grid">
+        <article>
+          <h3>NPM là gì?</h3>
+          <p>
+            <code>npm</code> là package manager đi kèm Node.js, dùng để cài package,
+            chạy scripts và publish package lên npm registry.
+          </p>
+          <pre><code>npm init -y
+npm install axios
+npm install -D vite
+npm run dev</code></pre>
+        </article>
+        <article>
+          <h3>Package được cài ở đâu?</h3>
+          <p>
+            Cài local sẽ tạo <code>node_modules/</code> trong project và ghi dependency vào
+            <code>package.json</code>. Cài global đặt package ở global prefix của máy, thường dùng cho CLI dùng chung.
+          </p>
+          <pre><code>npm install react
+# ./node_modules/react
+
+npm install -g serve
+# global prefix/bin/serve</code></pre>
+        </article>
+        <article>
+          <h3>Hướng dẫn package.json</h3>
+          <p>
+            File <code>package.json</code> mô tả metadata, scripts, dependencies,
+            devDependencies và package manager mà project mong muốn.
+          </p>
+          <pre><code>{
+  "name": "training-app",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  },
+  "packageManager": "pnpm@10.0.0"
+}</code></pre>
+        </article>
+      </div>
+
+      <div class="package-compare-panel">
+        <div class="lab-heading compact">
+          <p class="eyebrow">So sánh package manager</p>
+          <h3>NPM, Yarn, PNPM khác nhau thế nào?</h3>
+          <p>
+            Cả ba đều cài package từ registry và chạy scripts trong <code>package.json</code>.
+            Khác biệt chính nằm ở tốc độ, cách quản <code>node_modules</code>, lockfile và mức độ phù hợp với
+            team/project.
+            Tốc độ thực tế còn phụ thuộc version, cache, mạng, CI và độ lớn của dependency graph.
+          </p>
+        </div>
+        <div class="package-compare-table" role="table" aria-label="So sánh npm, Yarn và pnpm">
+          <div role="row">
+            <strong role="columnheader">Tiêu chí</strong>
+            <strong role="columnheader">npm</strong>
+            <strong role="columnheader">Yarn</strong>
+            <strong role="columnheader">pnpm</strong>
+          </div>
+          <div role="row">
+            <span>Điểm mạnh</span>
+            <span>Có sẵn khi cài Node.js, dễ dùng, tài liệu và cộng đồng rất lớn.</span>
+            <span>Từng nổi bật vì cài nhanh và lockfile ổn định; hiện vẫn phổ biến trong nhiều team frontend.</span>
+            <span>Cài nhanh, tiết kiệm dung lượng nhờ store chung và symlink.</span>
+          </div>
+          <div role="row">
+            <span>Vì sao Yarn có vẻ nhanh hơn npm?</span>
+            <span>npm đời mới đã cải thiện nhiều, nhưng npm cũ thường chậm hơn ở bước resolve/cài dependency.</span>
+            <span>Yarn classic từng nhanh hơn nhờ cache tốt, cài song song tốt hơn và lockfile nhất quán.</span>
+            <span>pnpm thường nhanh vì package đã tải được tái dùng từ store chung thay vì copy lại nhiều lần.</span>
+          </div>
+          <div role="row">
+            <span>node_modules</span>
+            <span>Cài package trực tiếp vào <code>node_modules</code> của project.</span>
+            <span>Tùy version/cấu hình; Yarn classic dùng <code>node_modules</code>, Yarn Berry có thể dùng
+              Plug'n'Play.</span>
+            <span>Dùng content-addressable store, rồi link package vào project.</span>
+          </div>
+          <div role="row">
+            <span>Version/dòng sản phẩm</span>
+            <span>npm đi theo Node.js, update độc lập được bằng npm.</span>
+            <span>Yarn classic là Yarn v1; Yarn Berry là Yarn v2+ với nhiều thay đổi lớn như Plug'n'Play.</span>
+            <span>pnpm là package manager riêng, thường dùng qua Corepack hoặc cài global.</span>
+          </div>
+          <div role="row">
+            <span>Lockfile</span>
+            <span><code>package-lock.json</code></span>
+            <span><code>yarn.lock</code></span>
+            <span><code>pnpm-lock.yaml</code></span>
+          </div>
+          <div role="row">
+            <span>Ưu điểm khi dùng</span>
+            <span>Ít setup nhất, phù hợp training, project nhỏ, hoặc team muốn dùng mặc định của Node.js.</span>
+            <span>Phù hợp team đã chuẩn hóa Yarn hoặc monorepo cần workspace quen thuộc.</span>
+            <span>Phù hợp monorepo, project nhiều package, CI cần cài nhanh và tiết kiệm cache.</span>
+          </div>
+          <div role="row">
+            <span>Lưu ý</span>
+            <span>Có thể chậm hơn pnpm ở project lớn; vẫn nên commit lockfile.</span>
+            <span>Cần thống nhất version Yarn vì Yarn classic và Yarn Berry khác nhau khá nhiều.</span>
+            <span><code>node_modules</code> chặt chẽ hơn, có thể lộ lỗi import package chưa khai báo trong
+              <code>package.json</code>.</span>
+          </div>
+          <div role="row">
+            <span>Khi nào nên dùng?</span>
+            <span>Khi muốn đơn giản, ít quy ước, onboarding nhanh.</span>
+            <span>Khi project/team hiện tại đã dùng Yarn ổn định.</span>
+            <span>Khi muốn tốc độ, tiết kiệm dung lượng, quản monorepo tốt.</span>
+          </div>
+        </div>
+        <p class="pattern-summary">
+          Quy tắc thực tế: trong một project chỉ nên dùng một package manager và commit đúng một lockfile tương ứng.
+        </p>
+        <div class="term-grid">
+          <article>
+            <h4>Yarn classic là gì?</h4>
+            <p>
+              Yarn classic là Yarn v1. Đây là dòng Yarn cũ, rất phổ biến, mặc định vẫn tạo
+              <code>node_modules</code> giống npm.
+            </p>
+          </article>
+          <article>
+            <h4>Yarn Berry là gì?</h4>
+            <p>
+              Yarn Berry là Yarn v2 trở lên. Nó thay đổi nhiều thứ so với Yarn v1,
+              có thêm Plug'n'Play, plugin và cách cấu hình hiện đại hơn.
+            </p>
+          </article>
+          <article>
+            <h4>Plug'n'Play là gì?</h4>
+            <p>
+              Plug'n'Play, hay PnP, là cách Yarn Berry bỏ qua <code>node_modules</code>.
+              Yarn lưu bản đồ dependency trong file cấu hình và chỉ đúng package nào được khai báo mới được import.
+            </p>
+          </article>
+          <article>
+            <h4>pnpm store và symlink là gì?</h4>
+            <p>
+              pnpm tải package vào một kho chung trên máy. Project chỉ link tới package trong kho đó,
+              nên nhiều project dùng cùng version sẽ không phải copy package nhiều lần.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <article class="demo-panel package-lab" data-demo="packageLab">
+        <div class="lab-heading compact">
+          <p class="eyebrow">Thực hành package manager</p>
+          <h3>Chọn tool và hành động để xem command tương ứng</h3>
+        </div>
+        <div class="control-row">
+          <label>Package manager
+            <select data-package-manager>
+              <option value="npm">npm</option>
+              <option value="yarn">yarn</option>
+              <option value="pnpm">pnpm</option>
+            </select>
+          </label>
+          <label>Hành động
+            <select data-package-action>
+              <option value="install">Cài tất cả dependency</option>
+              <option value="add">Thêm runtime dependency</option>
+              <option value="dev">Thêm dev dependency</option>
+              <option value="remove">Gỡ package</option>
+              <option value="run">Chạy script</option>
+            </select>
+          </label>
+        </div>
+        <div class="package-result">
+          <pre><code data-package-command></code></pre>
+          <div class="result-card">
+            <span>Lockfile</span>
+            <strong data-package-lock></strong>
+            <p data-package-note></p>
+          </div>
+        </div>
+      </article>
+
+      <div class="nvm-section">
+        <div class="section-heading compact">
+          <p class="eyebrow">NVM</p>
+          <h2>Quản lý Node version theo project</h2>
+          <p>
+            NVM cho phép cài nhiều version Node.js trên cùng máy và chuyển version theo project.
+            Với team, nên commit <code>.nvmrc</code> để mọi người dùng cùng major/minor Node.js.
+          </p>
+        </div>
+
+        <div class="two-column">
+          <div class="concept-panel">
+            <h3>Cài NVM</h3>
+            <p>
+              Trên macOS/Linux, nvm cung cấp install script qua <code>curl</code> hoặc <code>wget</code>.
+              Sau khi cài, mở terminal mới hoặc source lại shell profile.
+            </p>
+            <pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] &amp;&amp; \. "$NVM_DIR/nvm.sh"</code></pre>
+          </div>
+          <div class="concept-panel">
+            <h3>Install và quản lý Node version</h3>
+            <p>
+              Dùng <code>nvm install</code> để cài version, <code>nvm use</code> để chuyển version,
+              <code>nvm alias default</code> để đặt version mặc định.
+            </p>
+            <pre><code>nvm install --lts
+nvm install 22
+nvm use 22
+nvm alias default 22
+node -v
+npm -v</code></pre>
+          </div>
+        </div>
+
+        <article class="demo-panel nvm-lab" data-demo="nvmLab">
+          <div class="lab-heading compact">
+            <p class="eyebrow">.nvmrc lab</p>
+            <h3>Cấu hình Node version trong project</h3>
+          </div>
+          <div class="control-row">
+            <label>Node version
+              <select data-node-version>
+                <option value="lts">lts/*</option>
+                <option value="20">20</option>
+                <option value="22" selected>22</option>
+                <option value="24">24</option>
+              </select>
+            </label>
+            <label>Shell
+              <select data-shell-kind>
+                <option value="manual">Manual</option>
+                <option value="auto">Auto use khi cd</option>
+              </select>
+            </label>
+          </div>
+          <div class="package-result">
+            <pre><code data-nvm-command></code></pre>
+            <div class="result-card">
+              <span>Ghi nhớ</span>
+              <strong data-nvm-title></strong>
+              <p data-nvm-note></p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Quiz</p>
+        <h2>10 câu trắc nghiệm cuối bài</h2>
+        <p>Chọn đáp án cho từng câu. Điểm và giải thích sẽ cập nhật ngay sau mỗi lần chọn.</p>
+      </div>
+      <div class="quiz-shell" data-quiz>
+        <div class="quiz-score">
+          <strong data-quiz-score>0/0</strong>
+          <span data-quiz-message>Bắt đầu bằng câu hỏi đầu tiên.</span>
+        </div>
+        <div class="quiz-list" data-quiz-list></div>
+      </div>
+    </section>
+
+    <section id="tips" class="section band">
+      <div class="section-heading">
+        <p class="eyebrow">Tips</p>
+        <h2>Checklist sau buổi học</h2>
+      </div>
+      <div class="tips-grid">
+        <article>
+          <h3>Arrow function</h3>
+          <p>Dùng cho callback và function nhỏ. Tránh dùng khi cần dynamic <code>this</code> hoặc constructor.</p>
+        </article>
+        <article>
+          <h3>Class</h3>
+          <p>Dùng cho entity có state + behavior. Với helper thuần, export function thường nhẹ hơn.</p>
+        </article>
+        <article>
+          <h3>Spread</h3>
+          <p>Spread chỉ copy shallow. Object lồng nhau cần copy từng lớp liên quan.</p>
+        </article>
+        <article>
+          <h3>Module</h3>
+          <p>Export ít nhưng rõ. Named export phù hợp API nhiều hàm; default export phù hợp một giá trị chính.</p>
+        </article>
+        <article>
+          <h3>Nullish</h3>
+          <p>Dùng <code>??</code> khi <code>0</code>, <code>false</code>, <code>""</code> vẫn là giá trị hợp lệ.</p>
+        </article>
+        <article>
+          <h3>Fetch</h3>
+          <p>Luôn kiểm tra <code>response.ok</code>, parse JSON ở một wrapper chung và xử lý lỗi ở boundary UI.</p>
+        </article>
+        <article>
+          <h3>Package manager</h3>
+          <p>Commit một lockfile duy nhất: <code>package-lock.json</code>, <code>yarn.lock</code> hoặc
+            <code>pnpm-lock.yaml</code>.</p>
+        </article>
+        <article>
+          <h3>NVM</h3>
+          <p>Commit <code>.nvmrc</code>, chạy <code>nvm use</code> trước khi install dependency.</p>
+        </article>
+      </div>
+
+      <div class="sources">
+        <h3>Nguồn tham khảo chính</h3>
+        <ul>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript">MDN: A
+              re-introduction to JavaScript</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN:
+              Arrow function expressions</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">MDN: Classes</a></li>
+          <li><a href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN:
+              Spread syntax</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model">MDN:
+              Details of the object model</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">MDN:
+              import</a> và <a
+              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">export</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">MDN: Fetch API</a></li>
+          <li><a href="https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager">Node.js
+              Learn: npm package manager</a></li>
+          <li><a href="https://docs.npmjs.com/cli/v10/configuring-npm/package-json">npm Docs: package.json</a></li>
+          <li><a href="https://yarnpkg.com/">Yarn Docs</a>, <a href="https://pnpm.io/">pnpm Docs</a>, <a
+              href="https://github.com/nvm-sh/nvm">nvm</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

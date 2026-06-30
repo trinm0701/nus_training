@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="img" aria-labelledby="title desc">
+  <title id="title">ES6 and JavaScript toolbox learning map</title>
+  <desc id="desc">Sơ đồ lộ trình học ES6, modern JavaScript features, package manager và NVM toolbox.</desc>
+  <defs>
+    <filter id="soft-shadow" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+    <linearGradient id="hero-gradient" x1="84" y1="74" x2="676" y2="184" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563eb"/>
+      <stop offset="0.58" stop-color="#0f9f8f"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="712" height="512" rx="30" fill="#f8fbff" stroke="#c7d7ef" stroke-width="1.5"/>
+  <path d="M78 460 C170 512 300 520 410 474 C532 422 626 426 690 488" fill="none" stroke="#bfdbfe" stroke-width="16" stroke-linecap="round" opacity="0.5"/>
+  <path d="M72 150 C158 78 256 78 344 118 C456 169 548 158 668 90" fill="none" stroke="#ccfbf1" stroke-width="14" stroke-linecap="round" opacity="0.72"/>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="68" y="58" width="624" height="134" rx="22" fill="url(#hero-gradient)"/>
+    <rect x="98" y="92" width="72" height="64" rx="17" fill="#ffffff" opacity="0.18"/>
+    <text x="134" y="135" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="900" fill="#ffffff">ES6</text>
+    <text x="204" y="113" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="900" fill="#ffffff">Modern JavaScript</text>
+    <text x="204" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#eef9ff">Syntax -> Module -> Async -> Toolbox</text>
+    <rect x="544" y="94" width="104" height="58" rx="14" fill="#ffffff" opacity="0.2"/>
+    <text x="596" y="119" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="900" fill="#ffffff">ESM</text>
+    <text x="596" y="139" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800" fill="#f8fbff">toolbox</text>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g filter="url(#soft-shadow)">
+      <rect x="42" y="236" width="120" height="160" rx="18" fill="#ffffff" stroke="#bfdbfe"/>
+      <circle cx="102" cy="270" r="22" fill="#2563eb"/>
+      <text x="102" y="277" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">1</text>
+      <text x="102" y="313" text-anchor="middle" font-size="18" font-weight="900" fill="#14213d">Syntax</text>
+      <text x="102" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="102" dy="0">arrow</tspan>
+        <tspan x="102" dy="20">class</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="174" y="236" width="120" height="160" rx="18" fill="#ffffff" stroke="#bbf7d0"/>
+      <circle cx="234" cy="270" r="22" fill="#16a34a"/>
+      <text x="234" y="277" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">2</text>
+      <text x="234" y="313" text-anchor="middle" font-size="18" font-weight="900" fill="#14213d">Data</text>
+      <text x="234" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="234" dy="0">spread</tspan>
+        <tspan x="234" dy="20">methods</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="306" y="236" width="120" height="160" rx="18" fill="#ffffff" stroke="#fecdd3"/>
+      <circle cx="366" cy="270" r="22" fill="#e11d48"/>
+      <text x="366" y="277" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">3</text>
+      <text x="366" y="313" text-anchor="middle" font-size="18" font-weight="900" fill="#14213d">Module</text>
+      <text x="366" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="366" dy="0">import</tspan>
+        <tspan x="366" dy="20">export</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="438" y="236" width="120" height="160" rx="18" fill="#ffffff" stroke="#fde68a"/>
+      <circle cx="498" cy="270" r="22" fill="#f59e0b"/>
+      <text x="498" y="277" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">4</text>
+      <text x="498" y="313" text-anchor="middle" font-size="18" font-weight="900" fill="#14213d">Async</text>
+      <text x="498" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="498" dy="0">await</tspan>
+        <tspan x="498" dy="20">fetch</tspan>
+      </text>
+    </g>
+
+    <g filter="url(#soft-shadow)">
+      <rect x="570" y="236" width="148" height="160" rx="18" fill="#ffffff" stroke="#c4b5fd"/>
+      <circle cx="644" cy="270" r="22" fill="#7c3aed"/>
+      <text x="644" y="277" text-anchor="middle" font-size="18" font-weight="900" fill="#ffffff">5</text>
+      <text x="644" y="313" text-anchor="middle" font-size="18" font-weight="900" fill="#14213d">Toolbox</text>
+      <text x="644" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#53657d">
+        <tspan x="644" dy="0">npm pnpm</tspan>
+        <tspan x="644" dy="20">nvm</tspan>
+      </text>
+    </g>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" fill="#2563eb" opacity="0.68">
+    <text x="168" y="322" text-anchor="middle">→</text>
+    <text x="300" y="322" text-anchor="middle">→</text>
+    <text x="432" y="322" text-anchor="middle">→</text>
+    <text x="564" y="322" text-anchor="middle">→</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="86" y="426" width="588" height="74" rx="18" fill="#ffffff" stroke="#d8e2ef"/>
+    <circle cx="124" cy="463" r="16" fill="#e0f2fe"/>
+    <path d="M116 463 h16 M127 456 l7 7-7 7" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="158" y="456" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="900" fill="#14213d">Quy tắc nhớ nhanh</text>
+    <text x="158" y="474" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#53657d">
+      <tspan x="158" dy="0">Module rõ ràng, lockfile ổn định,</tspan>
+      <tspan x="158" dy="18">.nvmrc thống nhất Node version.</tspan>
+    </text>
+  </g>
+</svg>
